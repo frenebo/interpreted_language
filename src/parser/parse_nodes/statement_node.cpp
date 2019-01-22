@@ -2,16 +2,20 @@
 #include <vector>
 #include <optional>
 #include "tokens.hpp"
+#include <iostream>
 
 namespace parse_nodes
 {
-    StatementNode::StatementNode()
-    {
+    StatementNode::StatementNode(unsigned long token_count): _token_count(token_count) {}
 
+    StatementNode StatementNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
+    {
+        std::cout << "Parsing tokens\n";
+        return StatementNode(1);
     }
 
-    std::optional<StatementNode> StatementNode::parse_tokens(const std::vector<Token> & toks, long start_idx)
+    unsigned long StatementNode::token_count()
     {
-        return StatementNode();
+        return this->_token_count;
     }
 }

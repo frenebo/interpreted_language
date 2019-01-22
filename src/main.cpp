@@ -4,6 +4,7 @@
 #include "tokens.hpp"
 #include "token_logger/token_logger.hpp"
 #include "parser/parser.hpp"
+#include "parser/parse_nodes/parse_nodes.hpp"
 
 int main()
 {
