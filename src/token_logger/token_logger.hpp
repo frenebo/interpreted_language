@@ -8,9 +8,9 @@
 class TokenLogger
 {
 public:
-    static void log_tokens(std::vector<Token>);
+    static void log_tokens(const std::vector<Token> &);
 
-    static void log_token(Token);
+    static void log_token(const Token &);
 };
 
 #endif
