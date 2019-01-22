@@ -18,43 +18,43 @@ void TokenLogger::log_token(const Token & tok)
     {
     case TokenType::SEMICOLON_CH:
         std::cout << "Semicolon Token\n";
-        return;
+        break;
     case TokenType::PERIOD_CH:
         std::cout << "Period Token\n";
-        return;
+        break;
     case TokenType::OPEN_PAREN_CH:
         std::cout << "Open Parenthesis Token\n";
-        return;
+        break;
     case TokenType::CLOSE_PAREN_CH:
         std::cout << "Close Parenthesis Token\n";
-        return;
+        break;
     case TokenType::OPEN_BRACE_CH:
         std::cout << "Open Brace Token\n";
-        return;
+        break;
     case TokenType::CLOSE_BRACE_CH:
         std::cout << "Close Brace Token\n";
-        return;
+        break;
     case TokenType::MINUS_CH:
         std::cout << "Minus Sign Token\n";
-        return;
+        break;
     case TokenType::PLUS_CH:
         std::cout << "Plus Sign Token\n";
-        return;
+        break;
     case TokenType::DIVIDE_CH:
         std::cout << "Divide Sign Token\n";
-        return;
+        break;
     case TokenType::ASTERISK_CH:
         std::cout << "Asterisk Token\n";
-        return;
+        break;
     case TokenType::EQUALS_CH:
         std::cout << "Equals sign Token" << "\n";
-        return;
+        break;
     case TokenType::IDENTIFIER:
         std::cout << "Identifier Token: " << tok.get_contents() << "\n";
-        return;
+        break;
     case TokenType::NUMBER:
         std::cout << "Number Token: " << tok.get_contents() << "\n";
-        return;
+        break;
     default:
         std::cout << "Unimplemented token log\n";
     }
