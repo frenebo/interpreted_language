@@ -20,6 +20,8 @@ enum TokenType {
     CLOSE_BRACE_CH,
 };
 
+std::string token_type_to_string(TokenType);
+
 class Token
 {
 private:

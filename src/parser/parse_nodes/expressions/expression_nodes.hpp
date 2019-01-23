@@ -11,10 +11,13 @@ namespace parse_nodes::expressions
     {
     private:
         unsigned long _token_count;
-        IdentifierExpressionNode(unsigned long token_count);
+        std::string _identifier_str;
+        IdentifierExpressionNode(std::string identifier_str, unsigned long token_count);
     public:
+        std::string identifier_str();
         unsigned long token_count();
         static IdentifierExpressionNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        void print_node(int indentation_level);
     };
 
     class ExpressionNode
@@ -26,6 +29,7 @@ namespace parse_nodes::expressions
     public:
         unsigned long token_count();
         static ExpressionNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        void print_node(int indentation_level);
     };
 }
 

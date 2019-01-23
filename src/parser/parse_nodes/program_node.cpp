@@ -2,6 +2,7 @@
 #include <vector>
 #include "tokens.hpp"
 #include <optional>
+#include <iostream>
 #include "statements/statement_nodes.hpp"
 
 namespace parse_nodes
@@ -45,5 +46,15 @@ namespace parse_nodes
     unsigned long ProgramNode::token_count()
     {
         return this->_token_count;
+    }
+
+    void ProgramNode::print_node(int indentation_level)
+    {
+        std::cout << std::string(indentation_level, ' ') << "Program Node:\n";
+
+        for (statement_nodes::StatementNode expression_node : this->_statement_nodes)
+        {
+            expression_node.print_node(indentation_level + 1);
+        }
     }
 }

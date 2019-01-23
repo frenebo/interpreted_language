@@ -18,16 +18,6 @@ namespace parse_nodes
         }
     };
 
-    class ExpressionNode
-    {
-    private:
-        unsigned long _token_count;
-        ExpressionNode();
-    public:
-        unsigned long token_count();
-        static ExpressionNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-    };
-    
     class ProgramNode
     {
     private:
@@ -38,6 +28,7 @@ namespace parse_nodes
         const std::vector<statement_nodes::StatementNode> & statement_nodes();
         unsigned long token_count();
         static ProgramNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        void print_node(int indentation_level);
     };
 }
 

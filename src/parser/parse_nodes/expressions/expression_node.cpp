@@ -1,7 +1,8 @@
-#include "expressions_nodes.hpp"
+#include "expression_nodes.hpp"
 #include "parser/parse_nodes/parse_nodes.hpp"
 #include <vector>
 #include <optional>
+#include <iostream>
 #include "tokens.hpp"
 
 namespace parse_nodes::expressions
@@ -48,5 +49,15 @@ namespace parse_nodes::expressions
     unsigned long ExpressionNode::token_count()
     {
         return this->_token_count;
+    }
+
+    void ExpressionNode::print_node(int indentation_level)
+    {
+        std::cout << std::string(indentation_level, ' ') << "Expression Node:\n";
+
+        if (std::holds_alternative<IdentifierExpressionNode>(this->_child_exp_node))
+        {
+            std::get<IdentifierExpressionNode>(this->_child_exp_node).print_node(indentation_level + 1);
+        }
     }
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <variant>
 #include "tokens.hpp"
+#include "parser/parse_nodes/expressions/expression_nodes.hpp"
 
 namespace parse_nodes::statement_nodes
 {
@@ -11,10 +12,14 @@ namespace parse_nodes::statement_nodes
     {
     private:
         unsigned long _token_count;
-        ExpressionStatementNode(unsigned long token_count);
+        parse_nodes::expressions::ExpressionNode _exp_node;
+        ExpressionStatementNode(
+            parse_nodes::expressions::ExpressionNode exp_node,
+            unsigned long token_count);
     public:
         unsigned long token_count();
         static ExpressionStatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        void print_node(int indentation_level);
     };
     
     class StatementNode
@@ -26,6 +31,7 @@ namespace parse_nodes::statement_nodes
     public:
         unsigned long token_count();
         static StatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        void print_node(int indentation_level);
     };
 }
 
