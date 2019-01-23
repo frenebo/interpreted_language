@@ -8,11 +8,13 @@ Parser::Parser()
 
 }
 
-void Parser::parse_tokens(const std::vector<Token> & toks) const
+parse_nodes::ProgramNode Parser::parse_tokens(const std::vector<Token> & toks) const
 {
     try
     {
         parse_nodes::ProgramNode program_node = parse_nodes::ProgramNode::parse_tokens(toks, 0);
+
+        return program_node;
     }
     catch (const parse_nodes::NodeParseException & ex)
     {

@@ -11,8 +11,8 @@ namespace parse_nodes::statement_nodes
     class ExpressionStatementNode
     {
     private:
-        unsigned long _token_count;
         parse_nodes::expressions::ExpressionNode _exp_node;
+        unsigned long _token_count;
         ExpressionStatementNode(
             parse_nodes::expressions::ExpressionNode exp_node,
             unsigned long token_count);

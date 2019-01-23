@@ -41,8 +41,8 @@ namespace parse_nodes::expressions
     }
 
     ExpressionNode::ExpressionNode(unsigned long token_count, std::variant<IdentifierExpressionNode> child_exp_node)
-    : _token_count(token_count),
-    _child_exp_node(child_exp_node)
+    : _child_exp_node(child_exp_node),
+    _token_count(token_count)
     {
     }
     

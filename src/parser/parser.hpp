@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include "tokens.hpp"
+#include "parser/parse_nodes/parse_nodes.hpp"
 #include <vector>
 
 
@@ -19,7 +20,7 @@ class Parser
 {
 public:
     Parser();
-    void parse_tokens(const std::vector<Token> & toks) const;
+    parse_nodes::ProgramNode parse_tokens(const std::vector<Token> & toks) const;
 };
 
 

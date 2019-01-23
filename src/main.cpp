@@ -15,7 +15,8 @@ int main()
     );
     try
     {
-        Parser().parse_tokens(toks);
+        parse_nodes::ProgramNode program_node = Parser().parse_tokens(toks);
+        program_node.print_node(0);
     }
     catch (const ParseException & ex)
     {

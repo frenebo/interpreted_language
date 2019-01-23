@@ -3,17 +3,18 @@
 #include "parser/parse_nodes/expressions/expression_nodes.hpp"
 #include <vector>
 #include <iostream>
+#include <optional>
 #include "tokens.hpp"
 
 namespace parse_nodes::statement_nodes
 {
     ExpressionStatementNode ExpressionStatementNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        parse_nodes::expressions::ExpressionNode* exp_node;
+        std::optional<parse_nodes::expressions::ExpressionNode> exp_node;
         
         try
         {
-            exp_node = &parse_nodes::expressions::ExpressionNode::parse_tokens(toks, start_idx);
+            exp_node = parse_nodes::expressions::ExpressionNode::parse_tokens(toks, start_idx);
         }
         catch (const NodeParseException & ex)
         {
