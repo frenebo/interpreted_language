@@ -55,7 +55,8 @@ void TokenLogger::log_token(const Token & tok)
     case TokenType::NUMBER:
         std::cout << "Number Token: " << tok.get_contents() << "\n";
         break;
-    default:
-        std::cout << "Unimplemented token log\n";
+    case TokenType::WHITESPACE:
+        std::cout << "Whitespace Token";
+        break;
     }
 }

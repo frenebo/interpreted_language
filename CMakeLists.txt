@@ -11,5 +11,5 @@ file(GLOB_RECURSE proj_SRC
 
 add_executable(lang ${proj_SRC})
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra")
+SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Wswitch-enum")
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})

@@ -50,5 +50,7 @@ std::string token_type_to_string(TokenType tok_type)
         return "Open Brace";
     case TokenType::CLOSE_BRACE_CH:
         return "Close Brace";
+    default:
+        return "Unknown Token";
     }
 }
