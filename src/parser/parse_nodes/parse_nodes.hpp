@@ -4,14 +4,15 @@
 #include <vector>
 #include <optional>
 #include "tokens.hpp"
+#include "statements/statement_nodes.hpp"
 
 namespace parse_nodes
 {
-    class LoadException: public std::exception {
+    class NodeParseException: public std::exception {
     private:
         std::string message_;
     public:
-        explicit LoadException(const std::string& message) : message_(message) {};
+        explicit NodeParseException(const std::string& message) : message_(message) {};
         virtual const char* what() const throw() {
             return message_.c_str();
         }
@@ -26,25 +27,15 @@ namespace parse_nodes
         unsigned long token_count();
         static ExpressionNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
     };
-
-    class StatementNode
-    {
-    private:
-        unsigned long _token_count;
-        StatementNode(unsigned long token_count);
-    public:
-        unsigned long token_count();
-        static StatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-    };
     
     class ProgramNode
     {
     private:
-        std::vector<StatementNode> _statement_nodes;
+        std::vector<statement_nodes::StatementNode> _statement_nodes;
         unsigned long _token_count;
-        ProgramNode(std::vector<StatementNode> statement_nodes, unsigned long token_count);
+        ProgramNode(std::vector<statement_nodes::StatementNode> statement_nodes, unsigned long token_count);
     public:
-        const std::vector<StatementNode> & statement_nodes();
+        const std::vector<statement_nodes::StatementNode> & statement_nodes();
         unsigned long token_count();
         static ProgramNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
     };

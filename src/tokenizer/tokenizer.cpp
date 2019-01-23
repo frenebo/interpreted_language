@@ -3,14 +3,13 @@
 #include <optional>
 #include <map>
 #include <ctype.h>
-#include <iostream>
 
 
 std::vector<Token> Tokenizer::tokenize(const std::string & input_str) const
 {
     std::vector<Token> toks;
 
-    long input_start_idx = 0;
+    unsigned long input_start_idx = 0;
 
     // while there are still characters left to tokenize
     while (input_start_idx < input_str.length())
@@ -58,9 +57,9 @@ Tokenizer::Tokenizer()
     };
 }
 
-std::optional<Token> Tokenizer::try_match_longest_simple_token(const std::string & input_str, long input_start_idx) const
+std::optional<Token> Tokenizer::try_match_longest_simple_token(const std::string & input_str, unsigned long input_start_idx) const
 {
-    long chars_remaining = input_str.length() - input_start_idx;
+    unsigned long chars_remaining = input_str.length() - input_start_idx;
 
     std::optional<Token> result_tok;
 
@@ -90,7 +89,7 @@ std::optional<Token> Tokenizer::try_match_longest_simple_token(const std::string
     return result_tok;
 }
 
-std::optional<Token> match_longest_identifier(const std::string & input_str, long input_start_idx)
+std::optional<Token> match_longest_identifier(const std::string & input_str, unsigned long input_start_idx)
 {
     // if the first character isn't an alpha character, return
     if (!isalpha(input_str[input_start_idx]))
@@ -98,7 +97,7 @@ std::optional<Token> match_longest_identifier(const std::string & input_str, lon
         return std::optional<Token>();
     }
 
-    long identifier_length = 1;
+    unsigned long identifier_length = 1;
 
     while (
         input_start_idx + identifier_length < input_str.length() &&
@@ -110,7 +109,7 @@ std::optional<Token> match_longest_identifier(const std::string & input_str, lon
     return Token(TokenType::IDENTIFIER, input_str.substr(input_start_idx, identifier_length));
 }
 
-std::optional<Token> match_longest_whitespace(const std::string & input_str, long input_start_idx)
+std::optional<Token> match_longest_whitespace(const std::string & input_str, unsigned long input_start_idx)
 {
     // if the first character isn't whitespace
     if (!isspace(input_str[input_start_idx]))
@@ -118,7 +117,7 @@ std::optional<Token> match_longest_whitespace(const std::string & input_str, lon
         return std::optional<Token>();
     }
 
-    long identifier_length = 1;
+    unsigned long identifier_length = 1;
 
     while (
         input_start_idx + identifier_length < input_str.length() &&
@@ -130,7 +129,7 @@ std::optional<Token> match_longest_whitespace(const std::string & input_str, lon
     return Token(TokenType::WHITESPACE, input_str.substr(input_start_idx, identifier_length));
 }
 
-std::optional<Token> match_longest_number(const std::string & input_str, long input_start_idx)
+std::optional<Token> match_longest_number(const std::string & input_str, unsigned long input_start_idx)
 {
     // // if the first character isn't a digit or a period
     if (
@@ -141,11 +140,11 @@ std::optional<Token> match_longest_number(const std::string & input_str, long in
         return std::optional<Token>();
     }
 
-    long digits_before_period = 0;
-    long digits_after_period = 0;
+    unsigned long digits_before_period = 0;
+    unsigned long digits_after_period = 0;
     bool seen_period = false;
 
-    for (long idx = input_start_idx; idx < input_str.length(); idx++)
+    for (unsigned long idx = input_start_idx; idx < input_str.length(); idx++)
     {
         if (input_str[idx] == '.')
         {
@@ -178,12 +177,12 @@ std::optional<Token> match_longest_number(const std::string & input_str, long in
         return std::optional<Token>();
     }
 
-    long identifier_length = digits_before_period + digits_after_period + (seen_period ? 1 : 0);
+    unsigned long identifier_length = digits_before_period + digits_after_period + (seen_period ? 1 : 0);
 
     return Token(TokenType::NUMBER, input_str.substr(input_start_idx, identifier_length));
 }
 
-std::optional<Token> Tokenizer::try_match_longest_token(const std::string & input_str, long input_start_idx) const
+std::optional<Token> Tokenizer::try_match_longest_token(const std::string & input_str, unsigned long input_start_idx) const
 {
     std::optional<Token> result_tok;
     
