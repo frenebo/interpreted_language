@@ -8,8 +8,8 @@
 namespace parse_nodes::statement_nodes
 {
     StatementNode::StatementNode(unsigned long token_count, std::variant<ExpressionStatementNode> child_statement)
-    : _token_count(token_count),
-    _child_statement(child_statement)
+    : _child_statement(child_statement),
+    _token_count(token_count)
     {
     }
 
@@ -19,7 +19,7 @@ namespace parse_nodes::statement_nodes
         {
             ExpressionStatementNode exp_statement_node = ExpressionStatementNode::parse_tokens(toks, start_idx);
 
-            return StatementNode(exp_statement_node.token_count, exp_statement_node);
+            return StatementNode(exp_statement_node.token_count(), exp_statement_node);
         }
         catch (const parse_nodes::NodeParseException & ex)
         {

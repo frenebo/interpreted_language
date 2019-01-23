@@ -23,17 +23,15 @@ namespace parse_nodes::expressions
         }
         catch(const parse_nodes::NodeParseException & ex)
         {
-            return ExpressionNode(
-                identifier_node->token_count(),
-                identifier_node.value()
-            );
-            // throw parse_nodes::NodeParseException("Expected identifier: " + std::string(ex.what()));
+            // Do nothing?
         }
 
         if (identifier_node.has_value() && identifier_node->token_count() >= longest_match)
         {
-
-            // return identifier_node.value();
+            return ExpressionNode(
+                identifier_node->token_count(),
+                *identifier_node
+            );
         }
         else
         {
