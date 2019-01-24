@@ -21,7 +21,7 @@ class Parser
 {
 public:
     Parser();
-    parse_nodes::ProgramNode parse_tokens(const std::vector<Token> & toks) const;
+    parse_nodes::StatementSequenceNode parse_tokens(const std::vector<Token> & toks) const;
 };
 
 

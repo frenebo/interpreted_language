@@ -11,10 +11,7 @@ int main()
 {
     std::string to_parse = "a + b + 1; something = aaa + 100.0;";
 
-    std::clock_t start;
-    double duration;
-
-    start = std::clock();
+    std::clock_t clock_start = std::clock();
 
     
     auto tokenizer_output = tokenizer::Tokenizer().tokenize(to_parse);
@@ -29,7 +26,9 @@ int main()
     
     try
     {
-        parse_nodes::ProgramNode program_node = Parser().parse_tokens(toks);
+        parse_nodes::StatementSequenceNode program_node = Parser().parse_tokens(toks);
+
+        // program_node.print_node(0);s
     }
     catch (const ParseException & ex)
     {
@@ -37,7 +36,7 @@ int main()
     }
 
 
-    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    double duration = ( std::clock() - clock_start ) / (double) CLOCKS_PER_SEC;
 
     std::cout<< "duration: "<< duration <<'\n';
 }

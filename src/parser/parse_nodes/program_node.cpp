@@ -9,45 +9,45 @@
 
 namespace parse_nodes
 {
-    ProgramNode ProgramNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
+    StatementSequenceNode StatementSequenceNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        std::vector<statement_nodes::StatementNode> statement_nodes;
+        std::vector<statement_nodes::StatementNodeContainer> statement_nodes;
 
         long tokens_consumed = 0;
 
         while (toks[start_idx + tokens_consumed].get_type() != TokenType::END_OF_INPUT)
         {
-            statement_nodes::StatementNode statement_node =
-                statement_nodes::StatementNode::parse_tokens(toks, start_idx + tokens_consumed);
+            statement_nodes::StatementNodeContainer statement_node =
+                statement_nodes::StatementNodeContainer::parse_tokens(toks, start_idx + tokens_consumed);
 
             tokens_consumed += statement_node.token_count();
             statement_nodes.push_back(statement_node);
         }
         
-        return ProgramNode(statement_nodes, tokens_consumed);
+        return StatementSequenceNode(statement_nodes, tokens_consumed);
     }
     
-    ProgramNode::ProgramNode(std::vector<statement_nodes::StatementNode> statement_nodes, unsigned long token_count)
+    StatementSequenceNode::StatementSequenceNode(std::vector<statement_nodes::StatementNodeContainer> statement_nodes, unsigned long token_count)
     {
         this->_statement_nodes = statement_nodes;
         this->_token_count = token_count;
     }
 
-    const std::vector<statement_nodes::StatementNode> & ProgramNode::statement_nodes()
+    const std::vector<statement_nodes::StatementNodeContainer> & StatementSequenceNode::statement_nodes()
     {
         return this->_statement_nodes;
     }
 
-    unsigned long ProgramNode::token_count()
+    unsigned long StatementSequenceNode::token_count()
     {
         return this->_token_count;
     }
 
-    void ProgramNode::print_node(unsigned int indentation_level)
+    void StatementSequenceNode::print_node(unsigned int indentation_level)
     {
         std::cout << std::string(indentation_level, ' ') << "Program Node:\n";
 
-        for (statement_nodes::StatementNode expression_node : this->_statement_nodes)
+        for (statement_nodes::StatementNodeContainer expression_node : this->_statement_nodes)
         {
             expression_node.print_node(indentation_level + 1);
         }

@@ -22,15 +22,15 @@ namespace parse_nodes::statement_nodes
         void print_node(unsigned int indentation_level);
     };
     
-    class StatementNode
+    class StatementNodeContainer
     {
     private:
         std::variant<ExpressionStatementNode> _child_statement;
         unsigned long _token_count;
-        StatementNode(unsigned long token_count, std::variant<ExpressionStatementNode> child_statement);
+        StatementNodeContainer(unsigned long token_count, std::variant<ExpressionStatementNode> child_statement);
     public:
         unsigned long token_count();
-        static StatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        static StatementNodeContainer parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
         void print_node(unsigned int indentation_level);
     };
 }
