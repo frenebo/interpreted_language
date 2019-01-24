@@ -4,6 +4,7 @@
 #include <string>
 
 enum TokenType {
+    END_OF_INPUT,
     SEMICOLON_CH,
     IDENTIFIER,
     WHITESPACE,

@@ -7,6 +7,17 @@
 #include <optional>
 #include <map>
 #include <string>
+#include <exception>
+
+class TokenizerException: public std::exception {
+private:
+    std::string message_;
+public:
+    explicit TokenizerException(const std::string& message) : message_(message) {};
+    virtual const char* what() const throw() {
+        return message_.c_str();
+    }
+};
 
 class Tokenizer
 {

@@ -11,7 +11,6 @@ namespace parse_nodes::simple_expressions
     {
     }
 
-
     std::string NumberNode::number_str() const
     {
         return _number_str;
@@ -21,10 +20,21 @@ namespace parse_nodes::simple_expressions
     {
         return _token_count;
     }
-    
+
+    // @TODO negative numbers
     NumberNode NumberNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        // throw NodeP
+        TokenType next_tok_type = toks[start_idx].get_type();
+        
+        if (next_tok_type != TokenType::NUMBER)
+        {
+            throw NodeParseException("Expected " + token_type_to_string(TokenType::NUMBER) +", got " + token_type_to_string(next_tok_type));
+        }
+
+        return NumberNode(
+            toks[start_idx].get_contents(),
+            1 // one number token
+        );
     }
     
     void NumberNode::print_node(unsigned int indentation_level) const

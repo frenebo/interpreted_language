@@ -15,7 +15,7 @@ namespace parse_nodes
 
         long tokens_consumed = 0;
 
-        while (start_idx + tokens_consumed < toks.size())
+        while (toks[start_idx + tokens_consumed].get_type() != TokenType::END_OF_INPUT)
         {
             try 
             {

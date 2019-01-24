@@ -19,13 +19,16 @@ std::vector<Token> Tokenizer::tokenize(const std::string & input_str) const
 
         if (!possible_match.has_value())
         {
-            throw "Could not tokenize";
+            throw TokenizerException("Could not parse input");
         }
 
         input_start_idx += possible_match->get_contents().length();
         
         toks.push_back(*possible_match);
     }
+
+    // end of input
+    // toks.push_back(Token(TokenType::END_OF_INPUT, ""));
 
     // don't return whitespace tokens
     std::vector<Token> without_whitespace;
