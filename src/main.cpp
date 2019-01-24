@@ -2,10 +2,10 @@
 #include <vector>
 #include <ctime>
 
-#include "compiler_parser/tokens.hpp"
-#include "compiler_parser/parser/parser.hpp"
-#include "compiler_parser/parser/parse_nodes/parse_nodes.hpp"
-#include "compiler_parser/tokenizer/tokenizer.hpp"
+#include "compiler/tokens.hpp"
+#include "compiler/parser/parser.hpp"
+#include "compiler/parser/parse_nodes/parse_nodes.hpp"
+#include "compiler/tokenizer/tokenizer.hpp"
 
 int main()
 {
