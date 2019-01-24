@@ -38,7 +38,7 @@ namespace parse_nodes::simple_expressions
         }
         else
         {
-            throw NodeParseException("Expected simple expression");
+            throw NodeParseException("Expected expression");
         }
     }
     
