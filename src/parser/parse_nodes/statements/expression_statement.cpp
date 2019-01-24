@@ -38,12 +38,12 @@ namespace parse_nodes::statement_nodes
     {
     }
 
-    unsigned long ExpressionStatementNode::token_count()
+    unsigned long ExpressionStatementNode::token_count() const
     {
         return this->_token_count;
     }
 
-    void ExpressionStatementNode::print_node(unsigned int indentation_level)
+    void ExpressionStatementNode::print_node(unsigned int indentation_level) const
     {
         std::cout << std::string(indentation_level, ' ') << "Expression statement: \n";
 

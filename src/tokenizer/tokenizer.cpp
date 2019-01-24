@@ -55,6 +55,7 @@ namespace tokenizer
     {
         this->simple_tok_strings = {
             { TokenType::SEMICOLON_CH, ";" },
+            // { TokenType::COLON_CH, ":" },
             { TokenType::MINUS_CH, "-" },
             { TokenType::PLUS_CH, "+" },
             { TokenType::DIVIDE_CH, "/" },
@@ -65,6 +66,8 @@ namespace tokenizer
             { TokenType::CLOSE_PAREN_CH, ")" },
             { TokenType::OPEN_BRACE_CH, "{" },
             { TokenType::CLOSE_BRACE_CH, "}" },
+            { TokenType::FOR_KEYWORD, "for" },
+            { TokenType::IF_KEYWORD, "if" },
         };
     }
 

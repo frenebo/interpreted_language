@@ -34,7 +34,9 @@ namespace parse_nodes::simple_expressions
         }
         else
         {
-            throw NodeParseException("Expected expression");
+            throw NodeParseException(
+                "Expected expression: Unexpected token \"" + token_type_to_string(next_tok_type) + "\""
+            );
         }
     }
     

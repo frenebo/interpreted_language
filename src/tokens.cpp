@@ -24,6 +24,8 @@ std::string token_type_to_string(TokenType tok_type)
     {
     case TokenType::SEMICOLON_CH:
         return "Semicolon Character";
+    // case TokenType::COLON_CH:
+    //     return "Colon Character";
     case TokenType::IDENTIFIER:
         return "Identifier";
     case TokenType::WHITESPACE:
@@ -52,6 +54,10 @@ std::string token_type_to_string(TokenType tok_type)
         return "Close Brace";
     case TokenType::END_OF_INPUT:
         return "End Of Input";
+    case TokenType::FOR_KEYWORD:
+        return "For Keyword";
+    case TokenType::IF_KEYWORD:
+        return "If Keyword";
     default:
         return "Unknown Token";
     }

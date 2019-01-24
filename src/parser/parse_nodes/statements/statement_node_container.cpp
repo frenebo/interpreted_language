@@ -10,7 +10,12 @@
 
 namespace parse_nodes::statement_nodes
 {
-    StatementNodeContainer::StatementNodeContainer(unsigned long token_count, std::variant<ExpressionStatementNode> child_statement)
+    StatementNodeContainer::StatementNodeContainer(
+        unsigned long token_count,
+        std::variant<
+            ExpressionStatementNode,
+            IfStatementNode
+        > child_statement)
     : _child_statement(child_statement),
     _token_count(token_count)
     {
@@ -23,12 +28,12 @@ namespace parse_nodes::statement_nodes
         return StatementNodeContainer(exp_statement_node.token_count(), exp_statement_node);
     }
 
-    unsigned long StatementNodeContainer::token_count()
+    unsigned long StatementNodeContainer::token_count() const
     {
         return this->_token_count;
     }
 
-    void StatementNodeContainer::print_node(unsigned int indentation_level)
+    void StatementNodeContainer::print_node(unsigned int indentation_level) const
     {
         std::cout << std::string(indentation_level, ' ') << "Statement Node Container:\n";
         if (std::holds_alternative<ExpressionStatementNode>(this->_child_statement))

@@ -26,15 +26,19 @@ namespace parse_nodes::simple_expressions
     {
         TokenType next_tok_type = toks[start_idx].get_type();
         
-        if (next_tok_type != TokenType::NUMBER)
+        if (next_tok_type == TokenType::NUMBER)
         {
-            throw NodeParseException("Expected " + token_type_to_string(TokenType::NUMBER) +", got " + token_type_to_string(next_tok_type));
+            return NumberNode(
+                toks[start_idx].get_contents(),
+                1 // one number token
+            );
         }
-
-        return NumberNode(
-            toks[start_idx].get_contents(),
-            1 // one number token
-        );
+        else
+        {
+            throw NodeParseException(
+                "Expected " + token_type_to_string(TokenType::NUMBER) +
+                ", got " + token_type_to_string(next_tok_type));
+        }
     }
 
     bool NumberNode::look_ahead(TokenType next_tok_type)

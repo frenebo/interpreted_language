@@ -6,6 +6,7 @@
 enum TokenType {
     END_OF_INPUT,
     SEMICOLON_CH,
+    // COLON_CH,
     IDENTIFIER,
     WHITESPACE,
     MINUS_CH,
@@ -19,6 +20,8 @@ enum TokenType {
     CLOSE_PAREN_CH,
     OPEN_BRACE_CH,
     CLOSE_BRACE_CH,
+    FOR_KEYWORD,
+    IF_KEYWORD,
 };
 
 std::string token_type_to_string(TokenType);
