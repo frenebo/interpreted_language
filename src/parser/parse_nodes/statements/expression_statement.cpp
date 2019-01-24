@@ -15,18 +15,9 @@ namespace parse_nodes::statement_nodes
     {
         std::optional<parse_nodes::compound_expression::CompoundExpNode> exp_node;
         
-        try
-        {
-            exp_node = parse_nodes::compound_expression::CompoundExpNode::parse_tokens(toks, start_idx);
-        }
-        catch (const NodeParseException & ex)
-        {
-            throw NodeParseException(std::string(ex.what()));
-        }
+        exp_node = parse_nodes::compound_expression::CompoundExpNode::parse_tokens(toks, start_idx);
 
         TokenType next_tok_type = toks[start_idx + exp_node->token_count()].get_type();
-
-        std::cout << token_type_to_string(next_tok_type) << "\n";
 
         if (next_tok_type != TokenType::SEMICOLON_CH)
         {

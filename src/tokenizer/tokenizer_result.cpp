@@ -10,7 +10,7 @@ namespace tokenizer
     {
     }
 
-    std::vector<Token> TokenizerResult::tokens() const
+    const std::vector<Token> & TokenizerResult::tokens() const
     {
         return _tokens;
     }

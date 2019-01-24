@@ -17,7 +17,7 @@ namespace tokenizer
         std::vector<Token> _tokens;
     public:
         TokenizerResult(std::vector<Token> tokens);
-        std::vector<Token> tokens() const;
+        const std::vector<Token> & tokens() const;
     };
     
     class TokenizerErrorReturn

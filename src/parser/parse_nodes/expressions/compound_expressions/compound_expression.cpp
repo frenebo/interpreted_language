@@ -53,25 +53,18 @@ namespace parse_nodes::compound_expression
         
         std::vector<parse_nodes::operator_suffixes::OperatorSuffixContainer> operator_suffixes;
 
-        try
+        while (true)
         {
-            while (true)
-            {
-                std::optional<parse_nodes::operator_suffixes::OperatorSuffixContainer> try_parse_suffix =
-                    parse_nodes::operator_suffixes::OperatorSuffixContainer::try_parse_suffix(toks, start_idx + consumed_count);
+            std::optional<parse_nodes::operator_suffixes::OperatorSuffixContainer> try_parse_suffix =
+                parse_nodes::operator_suffixes::OperatorSuffixContainer::try_parse_suffix(toks, start_idx + consumed_count);
 
-                if (!try_parse_suffix.has_value())
-                {
-                    break;
-                }
-                
-                operator_suffixes.push_back(*try_parse_suffix);
-                consumed_count += try_parse_suffix->token_count();
+            if (!try_parse_suffix.has_value())
+            {
+                break;
             }
-        }
-        catch (const NodeParseException & ex)
-        {
-            throw NodeParseException(std::string(ex.what()));
+            
+            operator_suffixes.push_back(*try_parse_suffix);
+            consumed_count += try_parse_suffix->token_count();
         }
 
         return CompoundExpNode(

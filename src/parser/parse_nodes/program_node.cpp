@@ -17,18 +17,11 @@ namespace parse_nodes
 
         while (toks[start_idx + tokens_consumed].get_type() != TokenType::END_OF_INPUT)
         {
-            try 
-            {
-                statement_nodes::StatementNode statement_node =
-                    statement_nodes::StatementNode::parse_tokens(toks, start_idx + tokens_consumed);
+            statement_nodes::StatementNode statement_node =
+                statement_nodes::StatementNode::parse_tokens(toks, start_idx + tokens_consumed);
 
-                tokens_consumed += statement_node.token_count();
-                statement_nodes.push_back(statement_node);
-            }
-            catch (const NodeParseException & ex)
-            {
-                throw NodeParseException(std::string(ex.what()));
-            }
+            tokens_consumed += statement_node.token_count();
+            statement_nodes.push_back(statement_node);
         }
         
         return ProgramNode(statement_nodes, tokens_consumed);

@@ -26,22 +26,15 @@ namespace parse_nodes::operator_suffixes
 
         long consumed_count = 1; // one for plus sign
 
-        try
-        {
-            parse_nodes::simple_expressions::SimpleExpNode simple_exp_node = 
-                parse_nodes::simple_expressions::SimpleExpNode::parse_tokens(toks, start_idx + consumed_count);
-            
-            consumed_count += simple_exp_node.token_count();
-            
-            return BaseSimpleOperatorSuffix::SimpleOperatorParseResult(
-                simple_exp_node,
-                consumed_count
-            );
-        }
-        catch (const NodeParseException & ex)
-        {
-            throw NodeParseException(std::string(ex.what()));
-        }
+        parse_nodes::simple_expressions::SimpleExpNode simple_exp_node = 
+            parse_nodes::simple_expressions::SimpleExpNode::parse_tokens(toks, start_idx + consumed_count);
+        
+        consumed_count += simple_exp_node.token_count();
+        
+        return BaseSimpleOperatorSuffix::SimpleOperatorParseResult(
+            simple_exp_node,
+            consumed_count
+        );
     }
 
     BaseSimpleOperatorSuffix::BaseSimpleOperatorSuffix(

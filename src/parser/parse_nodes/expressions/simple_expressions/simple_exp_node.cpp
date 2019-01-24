@@ -12,51 +12,24 @@ namespace parse_nodes::simple_expressions
 {
     SimpleExpNode SimpleExpNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        unsigned long longest_match_len = 1;
-        std::optional<IdentifierExpNode> identifier_exp_match;
+        TokenType next_tok_type = toks[start_idx].get_type();
 
-        try
+        if (IdentifierExpNode::look_ahead(next_tok_type))
         {
-            identifier_exp_match = IdentifierExpNode::parse_tokens(toks, start_idx);
-
-            if (identifier_exp_match->token_count() > longest_match_len)
-            {
-                longest_match_len = identifier_exp_match->token_count();
-            }
-        }
-        catch (const NodeParseException & ex)
-        {
-            // do nothing?
-        }
-
-        std::optional<NumberNode> number_exp_match;
-
-        try
-        {
-            number_exp_match = NumberNode::parse_tokens(toks, start_idx);
+            IdentifierExpNode parsed_node = IdentifierExpNode::parse_tokens(toks, start_idx);
             
-            if (identifier_exp_match->token_count() > longest_match_len)
-            {
-                longest_match_len = identifier_exp_match->token_count();
-            }
-        }
-        catch (const NodeParseException & ex)
-        {
-            // nothing
-        }
-        
-        if (identifier_exp_match.has_value() && identifier_exp_match->token_count() >= longest_match_len)
-        {
             return SimpleExpNode(
-                *identifier_exp_match,
-                longest_match_len
+                parsed_node,
+                parsed_node.token_count()
             );
         }
-        else if (number_exp_match.has_value() && number_exp_match->token_count() >= longest_match_len)
+        else if (NumberNode::look_ahead(next_tok_type))
         {
+            NumberNode parsed_node = NumberNode::parse_tokens(toks, start_idx);
+
             return SimpleExpNode(
-                *number_exp_match,
-                longest_match_len
+                parsed_node,
+                parsed_node.token_count()
             );
         }
         else

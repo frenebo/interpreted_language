@@ -36,6 +36,11 @@ namespace parse_nodes::simple_expressions
             1 // one number token
         );
     }
+
+    bool NumberNode::look_ahead(TokenType next_tok_type)
+    {
+        return next_tok_type == TokenType::NUMBER;
+    }
     
     void NumberNode::print_node(unsigned int indentation_level) const
     {

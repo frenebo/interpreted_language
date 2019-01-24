@@ -22,6 +22,11 @@ namespace parse_nodes::simple_expressions
         }
     }
     
+    bool IdentifierExpNode::look_ahead(TokenType next_tok_type)
+    {
+        return next_tok_type == TokenType::IDENTIFIER;
+    }
+    
     IdentifierExpNode::IdentifierExpNode(std::string identifier_str, unsigned long token_count)
     : _identifier_str(identifier_str),
     _token_count(token_count)

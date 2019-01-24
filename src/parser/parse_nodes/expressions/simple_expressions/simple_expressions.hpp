@@ -19,6 +19,7 @@ namespace parse_nodes::simple_expressions
         std::string identifier_str() const;
         unsigned long token_count() const;
         static IdentifierExpNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        static bool look_ahead(TokenType next_tok_type);
         void print_node(unsigned int indentation_level) const;
     };
 
@@ -32,6 +33,7 @@ namespace parse_nodes::simple_expressions
         std::string number_str() const;
         unsigned long token_count() const;
         static NumberNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        static bool look_ahead(TokenType next_tok_type);
         void print_node(unsigned int indentation_level) const;
     };
     

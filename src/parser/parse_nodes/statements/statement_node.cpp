@@ -18,16 +18,9 @@ namespace parse_nodes::statement_nodes
 
     StatementNode StatementNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        try
-        {
-            ExpressionStatementNode exp_statement_node = ExpressionStatementNode::parse_tokens(toks, start_idx);
+        ExpressionStatementNode exp_statement_node = ExpressionStatementNode::parse_tokens(toks, start_idx);
 
-            return StatementNode(exp_statement_node.token_count(), exp_statement_node);
-        }
-        catch (const NodeParseException & ex)
-        {
-            throw NodeParseException(std::string(ex.what()));
-        }
+        return StatementNode(exp_statement_node.token_count(), exp_statement_node);
     }
 
     unsigned long StatementNode::token_count()
