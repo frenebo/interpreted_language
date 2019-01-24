@@ -1,8 +1,10 @@
+#include "node_parse_exception.hpp"
 #include "parse_nodes.hpp"
 #include <vector>
 #include "tokens.hpp"
 #include <optional>
 #include <iostream>
+#include <string>
 #include "statements/statement_nodes.hpp"
 
 namespace parse_nodes
@@ -25,7 +27,7 @@ namespace parse_nodes
             }
             catch (const NodeParseException & ex)
             {
-                throw ex;
+                throw NodeParseException(std::string(ex.what()));
             }
         }
         
@@ -48,7 +50,7 @@ namespace parse_nodes
         return this->_token_count;
     }
 
-    void ProgramNode::print_node(int indentation_level)
+    void ProgramNode::print_node(unsigned int indentation_level)
     {
         std::cout << std::string(indentation_level, ' ') << "Program Node:\n";
 

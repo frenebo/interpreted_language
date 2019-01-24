@@ -1,7 +1,9 @@
 #include "parser.hpp"
 #include <vector>
+#include <string>
+
 #include "tokens.hpp"
-#include "parse_nodes/parse_nodes.hpp"
+#include "parser/parse_nodes/node_parse_exception.hpp"
 
 Parser::Parser()
 {
@@ -16,7 +18,7 @@ parse_nodes::ProgramNode Parser::parse_tokens(const std::vector<Token> & toks) c
 
         return program_node;
     }
-    catch (const parse_nodes::NodeParseException & ex)
+    catch (const NodeParseException & ex)
     {
         throw ParseException(std::string(ex.what()));
     }

@@ -1,8 +1,10 @@
-#include "parser/parse_nodes/parse_nodes.hpp"
+#include "parser/parse_nodes/node_parse_exception.hpp"
 #include <vector>
 #include <optional>
 #include <variant>
 #include <iostream>
+#include <string>
+
 #include "tokens.hpp"
 #include "statement_nodes.hpp"
 
@@ -22,7 +24,7 @@ namespace parse_nodes::statement_nodes
 
             return StatementNode(exp_statement_node.token_count(), exp_statement_node);
         }
-        catch (const parse_nodes::NodeParseException & ex)
+        catch (const NodeParseException & ex)
         {
             throw NodeParseException(std::string(ex.what()));
         }
@@ -33,7 +35,7 @@ namespace parse_nodes::statement_nodes
         return this->_token_count;
     }
 
-    void StatementNode::print_node(int indentation_level)
+    void StatementNode::print_node(unsigned int indentation_level)
     {
         std::cout << std::string(indentation_level, ' ') << "Statement Node:\n";
         if (std::holds_alternative<ExpressionStatementNode>(this->_child_statement))

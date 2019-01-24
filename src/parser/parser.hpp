@@ -4,6 +4,7 @@
 #include "tokens.hpp"
 #include "parser/parse_nodes/parse_nodes.hpp"
 #include <vector>
+#include <string>
 
 
 class ParseException: public std::exception {

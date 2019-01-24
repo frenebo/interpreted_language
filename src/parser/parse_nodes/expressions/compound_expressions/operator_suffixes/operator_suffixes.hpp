@@ -5,18 +5,35 @@
 #include <variant>
 
 #include "tokens.hpp"
+#include "parser/parse_nodes/expressions/simple_expressions/simple_expressions.hpp"
 
-namespace parse_nodes::operator_suffixes{
+namespace parse_nodes::operator_suffixes
+{
+    class AdditionOperatorSuffix
+    {
+    private:
+        parse_nodes::simple_expressions::SimpleExpNode _simple_exp_node;
+        unsigned long _token_count;
+        
+        AdditionOperatorSuffix(parse_nodes::simple_expressions::SimpleExpNode simple_exp_node, unsigned long token_count);
+    public:
+        static AdditionOperatorSuffix parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        parse_nodes::simple_expressions::SimpleExpNode simple_exp_node() const;
+        unsigned long token_count() const;
+        void print_node(unsigned int indentation_level) const;
+    };
+    
     class OperatorSuffix
     {
     private:
-        std::variant<> _contained_op_extension;
+        std::variant<AdditionOperatorSuffix> _contained_op_extension;
         unsigned long _token_count;
-        OperatorSuffix(std::variant<> contained_op_extension, unsigned long token_count);
+        OperatorSuffix(std::variant<AdditionOperatorSuffix> contained_op_extension, unsigned long token_count);
     public:
-        unsigned long token_count() const;
         static OperatorSuffix parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-        std::variant<> contained_op_extension() const;
+        unsigned long token_count() const;
+        std::variant<AdditionOperatorSuffix> contained_op_extension() const;
+        void print_node(unsigned int indentation_level) const;
     };
 }
 

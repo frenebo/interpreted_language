@@ -6,6 +6,7 @@
 #include <vector>
 #include <optional>
 #include <map>
+#include <string>
 
 class Tokenizer
 {

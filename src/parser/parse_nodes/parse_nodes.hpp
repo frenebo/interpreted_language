@@ -3,21 +3,13 @@
 
 #include <vector>
 #include <optional>
+#include <string>
+
 #include "tokens.hpp"
-#include "statements/statement_nodes.hpp"
+#include "parser/parse_nodes/statements/statement_nodes.hpp"
 
 namespace parse_nodes
 {
-    class NodeParseException: public std::exception {
-    private:
-        std::string message_;
-    public:
-        explicit NodeParseException(const std::string& message) : message_(message) {};
-        virtual const char* what() const throw() {
-            return message_.c_str();
-        }
-    };
-
     class ProgramNode
     {
     private:
@@ -28,7 +20,7 @@ namespace parse_nodes
         const std::vector<statement_nodes::StatementNode> & statement_nodes();
         unsigned long token_count();
         static ProgramNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-        void print_node(int indentation_level);
+        void print_node(unsigned int indentation_level);
     };
 }
 

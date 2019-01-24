@@ -4,22 +4,23 @@
 #include <vector>
 #include <variant>
 #include "tokens.hpp"
-#include "parser/parse_nodes/expressions/expression_nodes.hpp"
+#include "parser/parse_nodes/expressions/compound_expressions/compound_expression.hpp"
+// #include "parser/parse_nodes/expressions/expression_nodes.hpp"
 
 namespace parse_nodes::statement_nodes
 {
     class ExpressionStatementNode
     {
     private:
-        parse_nodes::expressions::ExpressionNode _exp_node;
+        parse_nodes::compound_expression::CompoundExpNode  _exp_node;
         unsigned long _token_count;
         ExpressionStatementNode(
-            parse_nodes::expressions::ExpressionNode exp_node,
+            parse_nodes::compound_expression::CompoundExpNode exp_node,
             unsigned long token_count);
     public:
         unsigned long token_count();
         static ExpressionStatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-        void print_node(int indentation_level);
+        void print_node(unsigned int indentation_level);
     };
     
     class StatementNode
@@ -31,7 +32,7 @@ namespace parse_nodes::statement_nodes
     public:
         unsigned long token_count();
         static StatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
-        void print_node(int indentation_level);
+        void print_node(unsigned int indentation_level);
     };
 }
 

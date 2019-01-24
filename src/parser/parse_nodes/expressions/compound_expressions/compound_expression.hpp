@@ -12,9 +12,10 @@ namespace parse_nodes::compound_expression
     class CompoundExpNode
     {
     private:
-        unsigned long _token_count;
         parse_nodes::simple_expressions::SimpleExpNode _first_exp_node;
         std::vector<parse_nodes::operator_suffixes::OperatorSuffix> _operator_suffixes;
+        unsigned long _token_count;
+        
         CompoundExpNode(
             parse_nodes::simple_expressions::SimpleExpNode first_exp_node,
             std::vector<parse_nodes::operator_suffixes::OperatorSuffix> operator_suffixes,
@@ -24,6 +25,8 @@ namespace parse_nodes::compound_expression
         unsigned long token_count() const;
         const std::vector<parse_nodes::operator_suffixes::OperatorSuffix> & operator_suffixes() const;
         parse_nodes::simple_expressions::SimpleExpNode first_exp_node() const;
+
+        void print_node(unsigned int indentation_level) const;
 
         static CompoundExpNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
     };

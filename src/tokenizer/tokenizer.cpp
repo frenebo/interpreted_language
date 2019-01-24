@@ -3,6 +3,7 @@
 #include <optional>
 #include <map>
 #include <ctype.h>
+#include <string>
 
 
 std::vector<Token> Tokenizer::tokenize(const std::string & input_str) const

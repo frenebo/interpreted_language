@@ -11,7 +11,7 @@ int main()
     Tokenizer tokenizer;
     
     std::vector<Token> toks = tokenizer.tokenize(
-        "a;a;"
+        "a+b;"
     );
     try
     {

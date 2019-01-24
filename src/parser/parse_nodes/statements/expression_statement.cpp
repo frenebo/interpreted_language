@@ -1,20 +1,23 @@
+
+#include "parser/parse_nodes/node_parse_exception.hpp"
+#include "parser/parse_nodes/expressions/compound_expressions/compound_expression.hpp"
+#include "tokens.hpp"
 #include "statement_nodes.hpp"
-#include "parser/parse_nodes/parse_nodes.hpp"
-#include "parser/parse_nodes/expressions/expression_nodes.hpp"
+
 #include <vector>
 #include <iostream>
 #include <optional>
-#include "tokens.hpp"
+#include <string>
 
 namespace parse_nodes::statement_nodes
 {
     ExpressionStatementNode ExpressionStatementNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        std::optional<parse_nodes::expressions::ExpressionNode> exp_node;
+        std::optional<parse_nodes::compound_expression::CompoundExpNode> exp_node;
         
         try
         {
-            exp_node = parse_nodes::expressions::ExpressionNode::parse_tokens(toks, start_idx);
+            exp_node = parse_nodes::compound_expression::CompoundExpNode::parse_tokens(toks, start_idx);
         }
         catch (const NodeParseException & ex)
         {
@@ -40,7 +43,7 @@ namespace parse_nodes::statement_nodes
     }
 
     ExpressionStatementNode::ExpressionStatementNode(
-        parse_nodes::expressions::ExpressionNode exp_node,
+        parse_nodes::compound_expression::CompoundExpNode exp_node,
         unsigned long token_count)
     : _exp_node(exp_node),
     _token_count(token_count)
@@ -52,7 +55,7 @@ namespace parse_nodes::statement_nodes
         return this->_token_count;
     }
 
-    void ExpressionStatementNode::print_node(int indentation_level)
+    void ExpressionStatementNode::print_node(unsigned int indentation_level)
     {
         std::cout << std::string(indentation_level, ' ') << "Expression statement: \n";
 
