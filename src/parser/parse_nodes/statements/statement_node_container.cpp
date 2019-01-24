@@ -12,7 +12,7 @@ namespace parse_nodes::statement_nodes
 {
     StatementNodeContainer::StatementNodeContainer(
         unsigned long token_count,
-        std::variant<ExpressionStatementNode> child_statement)
+        std::variant<ExpressionStatementNode, IfStatementNode> child_statement)
     : _child_statement(child_statement),
     _token_count(token_count)
     {
@@ -24,7 +24,7 @@ namespace parse_nodes::statement_nodes
 
         return StatementNodeContainer(
             exp_statement_node.token_count(),
-            std::variant<ExpressionStatementNode>(exp_statement_node)
+            std::variant<ExpressionStatementNode, IfStatementNode>(exp_statement_node)
         );
     }
 
