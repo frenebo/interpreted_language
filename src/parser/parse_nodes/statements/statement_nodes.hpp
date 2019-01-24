@@ -23,6 +23,8 @@ namespace parse_nodes::statement_nodes
     public:
         unsigned long token_count() const;
         void print_node(unsigned int indentation_level) const;
+        static bool look_ahead(TokenType next_tok_type);
+        static IfStatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
     };
     
     class ExpressionStatementNode

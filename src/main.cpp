@@ -11,7 +11,7 @@ int main()
 {
     std::string to_parse = "a + b + 1; something = aaa + 3 = 100.0;";
 
-    std::clock_t clock_start = std::clock();
+    std::clock_t tokenize_clock_start = std::clock();
     
     auto tokenizer_output = tokenizer::Tokenizer().tokenize(to_parse);
 
@@ -22,6 +22,11 @@ int main()
     }
 
     const std::vector<Token> & toks = std::get<tokenizer::TokenizerResult>(tokenizer_output).tokens();
+
+    double tokenize_duration = ( std::clock() - tokenize_clock_start ) / (double) CLOCKS_PER_SEC;
+    std::cout<< "Tokenize duration: " << tokenize_duration <<'\n';
+
+    std::clock_t parse_clock_start = std::clock();
     
     try
     {
@@ -32,7 +37,7 @@ int main()
         std::cout << "Parse Error: " << ex.what() << "\n";
     }
 
-    double duration = ( std::clock() - clock_start ) / (double) CLOCKS_PER_SEC;
-
-    std::cout<< "duration: "<< duration <<'\n';
+    double parse_duration = ( std::clock() - parse_clock_start ) / (double) CLOCKS_PER_SEC;
+    std::cout << "Parse duration:    " << parse_duration << "\n";
+    std::cout << "Total duration:    " << tokenize_duration + parse_duration << "\n";
 }

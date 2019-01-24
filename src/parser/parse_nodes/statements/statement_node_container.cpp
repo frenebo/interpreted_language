@@ -20,12 +20,26 @@ namespace parse_nodes::statement_nodes
 
     StatementNodeContainer StatementNodeContainer::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
     {
-        ExpressionStatementNode exp_statement_node = ExpressionStatementNode::parse_tokens(toks, start_idx);
+        TokenType next_tok_type = toks[start_idx].get_type();
+        
+        if (IfStatementNode::look_ahead(next_tok_type))
+        {
+            IfStatementNode if_statement_node = IfStatementNode::parse_tokens(toks, start_idx);
 
-        return StatementNodeContainer(
-            exp_statement_node.token_count(),
-            std::variant<ExpressionStatementNode, IfStatementNode>(exp_statement_node)
-        );
+            return StatementNodeContainer(
+                if_statement_node.token_count(),
+                std::variant<ExpressionStatementNode, IfStatementNode>(if_statement_node)
+            );
+        }
+        else
+        {
+            ExpressionStatementNode exp_statement_node = ExpressionStatementNode::parse_tokens(toks, start_idx);
+
+            return StatementNodeContainer(
+                exp_statement_node.token_count(),
+                std::variant<ExpressionStatementNode, IfStatementNode>(exp_statement_node)
+            );
+        }
     }
 
     unsigned long StatementNodeContainer::token_count() const
