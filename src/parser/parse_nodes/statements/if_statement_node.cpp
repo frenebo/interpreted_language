@@ -35,6 +35,7 @@ namespace parse_nodes::statement_nodes
     IfStatementNode& IfStatementNode::operator=(const IfStatementNode & other) noexcept
     {
         delete this->_if_body; // necessary???
+        this->_if_condition = other.if_condition();
         this->_if_body = new parse_nodes::StatementSequenceNode(other.if_body());
         this->_token_count = other.token_count();
 
