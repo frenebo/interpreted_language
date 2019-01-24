@@ -28,11 +28,34 @@ namespace parse_nodes::simple_expressions
         {
             // do nothing?
         }
+
+        std::optional<NumberNode> number_exp_match;
+
+        try
+        {
+            number_exp_match = NumberNode::parse_tokens(toks, start_idx);
+            
+            if (identifier_exp_match->token_count() > longest_match_len)
+            {
+                longest_match_len = identifier_exp_match->token_count();
+            }
+        }
+        catch (const NodeParseException & ex)
+        {
+            // nothing
+        }
         
         if (identifier_exp_match.has_value() && identifier_exp_match->token_count() >= longest_match_len)
         {
             return SimpleExpNode(
                 *identifier_exp_match,
+                longest_match_len
+            );
+        }
+        else if (number_exp_match.has_value() && number_exp_match->token_count() >= longest_match_len)
+        {
+            return SimpleExpNode(
+                *number_exp_match,
                 longest_match_len
             );
         }
@@ -42,13 +65,13 @@ namespace parse_nodes::simple_expressions
         }
     }
     
-    SimpleExpNode::SimpleExpNode(std::variant<IdentifierExpNode> contained_exp_node, unsigned long token_count)
+    SimpleExpNode::SimpleExpNode(std::variant<IdentifierExpNode, NumberNode> contained_exp_node, unsigned long token_count)
     : _contained_exp_node(contained_exp_node),
     _token_count(token_count)
     {
     }
 
-    std::variant<IdentifierExpNode> SimpleExpNode::contained_exp_node() const
+    std::variant<IdentifierExpNode, NumberNode> SimpleExpNode::contained_exp_node() const
     {
         return _contained_exp_node;
     }
@@ -65,6 +88,10 @@ namespace parse_nodes::simple_expressions
         if (std::holds_alternative<IdentifierExpNode>(_contained_exp_node))
         {
             std::get<IdentifierExpNode>(_contained_exp_node).print_node(indentation_level + 1);
+        }
+        else if (std::holds_alternative<NumberNode>(_contained_exp_node))
+        {
+            std::get<NumberNode>(_contained_exp_node).print_node(indentation_level + 1);
         }
         else
         {

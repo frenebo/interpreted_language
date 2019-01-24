@@ -39,6 +39,6 @@ namespace parse_nodes::simple_expressions
     
     void NumberNode::print_node(unsigned int indentation_level) const
     {
-        std::cout << std::string(indentation_level, ' ') << "Number Node: " << _number_str;
+        std::cout << std::string(indentation_level, ' ') << "Number Node: " << _number_str << "\n";
     }
 }

@@ -35,6 +35,7 @@
         "__nullptr": "cpp",
         "cstddef": "cpp",
         "variant": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "deque": "cpp"
     }
 }

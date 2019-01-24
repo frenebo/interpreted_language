@@ -9,7 +9,7 @@ namespace parse_nodes::compound_expression
 {
     CompoundExpNode::CompoundExpNode(
         parse_nodes::simple_expressions::SimpleExpNode first_exp_node,
-        std::vector<parse_nodes::operator_suffixes::OperatorSuffix> operator_suffixes,
+        std::vector<parse_nodes::operator_suffixes::OperatorSuffixContainer> operator_suffixes,
         unsigned long token_count)
     : _first_exp_node(first_exp_node),
     _operator_suffixes(operator_suffixes),
@@ -22,7 +22,7 @@ namespace parse_nodes::compound_expression
         return _first_exp_node;
     }
 
-    const std::vector<parse_nodes::operator_suffixes::OperatorSuffix> & CompoundExpNode::operator_suffixes() const
+    const std::vector<parse_nodes::operator_suffixes::OperatorSuffixContainer> & CompoundExpNode::operator_suffixes() const
     {
         return _operator_suffixes;
     }
@@ -38,10 +38,7 @@ namespace parse_nodes::compound_expression
 
         _first_exp_node.print_node(indentation_level + 1);
 
-        if (_operator_suffixes.size() != 0)
-            std::cout << std::string(indentation_level, ' ') << "Suffixes:\n";
-
-        for (parse_nodes::operator_suffixes::OperatorSuffix op_suffix : _operator_suffixes)
+        for (parse_nodes::operator_suffixes::OperatorSuffixContainer op_suffix : _operator_suffixes)
         {
             op_suffix.print_node(indentation_level + 1);
         }
@@ -54,14 +51,14 @@ namespace parse_nodes::compound_expression
 
         unsigned long consumed_count = 1;
         
-        std::vector<parse_nodes::operator_suffixes::OperatorSuffix> operator_suffixes;
+        std::vector<parse_nodes::operator_suffixes::OperatorSuffixContainer> operator_suffixes;
 
         try
         {
             while (true)
             {
-                std::optional<parse_nodes::operator_suffixes::OperatorSuffix> try_parse_suffix =
-                    parse_nodes::operator_suffixes::OperatorSuffix::try_parse_suffix(toks, start_idx + consumed_count);
+                std::optional<parse_nodes::operator_suffixes::OperatorSuffixContainer> try_parse_suffix =
+                    parse_nodes::operator_suffixes::OperatorSuffixContainer::try_parse_suffix(toks, start_idx + consumed_count);
 
                 if (!try_parse_suffix.has_value())
                 {

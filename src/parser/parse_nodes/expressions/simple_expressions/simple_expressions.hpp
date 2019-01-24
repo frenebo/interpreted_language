@@ -38,12 +38,12 @@ namespace parse_nodes::simple_expressions
     class SimpleExpNode
     {
     private:
-        std::variant<IdentifierExpNode> _contained_exp_node;
+        std::variant<IdentifierExpNode, NumberNode> _contained_exp_node;
         unsigned long _token_count;
-        SimpleExpNode(std::variant<IdentifierExpNode> contained_exp_node, unsigned long token_count);
+        SimpleExpNode(std::variant<IdentifierExpNode, NumberNode> contained_exp_node, unsigned long token_count);
     public:
         unsigned long token_count() const;
-        std::variant<IdentifierExpNode> contained_exp_node() const;
+        std::variant<IdentifierExpNode, NumberNode> contained_exp_node() const;
         void print_node(unsigned int indentation_level) const;
         static SimpleExpNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
     };

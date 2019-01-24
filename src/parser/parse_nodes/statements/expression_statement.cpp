@@ -24,12 +24,9 @@ namespace parse_nodes::statement_nodes
             throw NodeParseException(std::string(ex.what()));
         }
 
-        if (toks.size() <= start_idx + exp_node->token_count())
-        {
-            throw NodeParseException("Expected semicolon, reached end of input");
-        }
-
         TokenType next_tok_type = toks[start_idx + exp_node->token_count()].get_type();
+
+        std::cout << token_type_to_string(next_tok_type) << "\n";
 
         if (next_tok_type != TokenType::SEMICOLON_CH)
         {
