@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <optional>
+#include <algorithm>
 
 #include "operator_suffixes.hpp"
 #include "tokens.hpp"
@@ -8,40 +9,24 @@
 
 namespace parse_nodes::operator_suffixes
 {    
-    OperatorSuffix OperatorSuffix::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
+    std::optional<OperatorSuffix> OperatorSuffix::try_parse_suffix(const std::vector<Token> & toks, unsigned long start_idx)
     {
+        TokenType first_tok_type = toks[start_idx].get_type();
         
-        // AdditionOperatorSuffix:
-        std::optional<AdditionOperatorSuffix> parsed_addition_op;
+        std::vector<TokenType> add_first_tok_types = AdditionOperatorSuffix::possible_first_token_types();
 
-        unsigned long longest_match = 0;
-
-        try
+        if (std::find(add_first_tok_types.begin(), add_first_tok_types.end(), first_tok_type) != add_first_tok_types.end())
         {
-            parsed_addition_op = AdditionOperatorSuffix::parse_tokens(toks, start_idx);
-
-            if (parsed_addition_op->token_count() > longest_match)
-            {
-                longest_match = parsed_addition_op->token_count();
-            }
-        }
-        catch (const NodeParseException & ex)
-        {
-            // do nothing
-        }
-
-        if (parsed_addition_op.has_value() && parsed_addition_op->token_count() >= longest_match)
-        {
+            AdditionOperatorSuffix parsed_addition_op = AdditionOperatorSuffix::parse_tokens(toks, start_idx);
+            
             return OperatorSuffix(
-                std::variant<AdditionOperatorSuffix>(*parsed_addition_op),
-                longest_match
+                std::variant<AdditionOperatorSuffix>(parsed_addition_op),
+                parsed_addition_op.token_count()
             );
         }
         else
         {
-            // @TODO show the error from the closest suffix?
-            
-            throw NodeParseException("Expected operator suffix");
+            return std::optional<OperatorSuffix>();
         }
     }
     

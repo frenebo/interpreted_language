@@ -11,7 +11,7 @@ int main()
     try
     {
         std::vector<Token> toks = Tokenizer().tokenize(
-            "a +$ b;"
+            "a + b +;"
         );
     
         parse_nodes::ProgramNode program_node = Parser().parse_tokens(toks);

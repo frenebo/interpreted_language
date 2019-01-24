@@ -60,16 +60,21 @@ namespace parse_nodes::compound_expression
         {
             while (true)
             {
-                parse_nodes::operator_suffixes::OperatorSuffix suffix =
-                    parse_nodes::operator_suffixes::OperatorSuffix::parse_tokens(toks, start_idx + consumed_count);
+                std::optional<parse_nodes::operator_suffixes::OperatorSuffix> try_parse_suffix =
+                    parse_nodes::operator_suffixes::OperatorSuffix::try_parse_suffix(toks, start_idx + consumed_count);
+
+                if (!try_parse_suffix.has_value())
+                {
+                    break;
+                }
                 
-                operator_suffixes.push_back(suffix);
-                consumed_count += suffix.token_count();
+                operator_suffixes.push_back(*try_parse_suffix);
+                consumed_count += try_parse_suffix->token_count();
             }
         }
         catch (const NodeParseException & ex)
         {
-            // do nothing - this just keeps adding suffixes until the suffix parser throws
+            throw NodeParseException(std::string(ex.what()));
         }
 
         return CompoundExpNode(

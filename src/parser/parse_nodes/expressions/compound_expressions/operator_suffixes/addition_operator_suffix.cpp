@@ -43,6 +43,15 @@ namespace parse_nodes::operator_suffixes
         }
     }
 
+    std::vector<TokenType> AdditionOperatorSuffix::possible_first_token_types()
+    {
+        std::vector<TokenType> possible_types;
+
+        possible_types.push_back(TokenType::PLUS_CH);
+
+        return possible_types;
+    }
+
     AdditionOperatorSuffix::AdditionOperatorSuffix(
         parse_nodes::simple_expressions::SimpleExpNode simple_exp_node,
         unsigned long token_count)
