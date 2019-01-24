@@ -14,7 +14,8 @@ parse_nodes::StatementSequenceNode Parser::parse_tokens(const std::vector<Token>
 {
     try
     {
-        parse_nodes::StatementSequenceNode program_node = parse_nodes::StatementSequenceNode::parse_tokens(toks, 0);
+        parse_nodes::StatementSequenceNode program_node =
+            parse_nodes::StatementSequenceNode::parse_tokens(toks, 0, TokenType::END_OF_INPUT);
 
         return program_node;
     }

@@ -9,7 +9,15 @@
 
 int main()
 {
-    std::string to_parse = "a + b + 1; something = aaa + 3 = 100.0;";
+    std::string to_parse =
+"a + b + 1;"
+"something = aaa + 3 = 100.0;"
+"if (1) {"
+"  a = 10;"
+"  if (1) {"
+"    a = 10;"
+"  }"
+"}";
 
     std::clock_t tokenize_clock_start = std::clock();
     

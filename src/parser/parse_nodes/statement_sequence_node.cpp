@@ -1,21 +1,25 @@
-#include "node_parse_exception.hpp"
-#include "parse_nodes.hpp"
 #include <vector>
-#include "tokens.hpp"
 #include <optional>
 #include <iostream>
 #include <string>
+
 #include "statements/statement_nodes.hpp"
+#include "tokens.hpp"
+#include "node_parse_exception.hpp"
+#include "parse_nodes.hpp"
 
 namespace parse_nodes
 {
-    StatementSequenceNode StatementSequenceNode::parse_tokens(const std::vector<Token> & toks, unsigned long start_idx)
+    StatementSequenceNode StatementSequenceNode::parse_tokens(
+        const std::vector<Token> & toks,
+        unsigned long start_idx,
+        TokenType stop_parsing_tok)
     {
         std::vector<statement_nodes::StatementNodeContainer> statement_nodes;
 
         long tokens_consumed = 0;
 
-        while (toks[start_idx + tokens_consumed].get_type() != TokenType::END_OF_INPUT)
+        while (toks[start_idx + tokens_consumed].get_type() != stop_parsing_tok)
         {
             statement_nodes::StatementNodeContainer statement_node =
                 statement_nodes::StatementNodeContainer::parse_tokens(toks, start_idx + tokens_consumed);

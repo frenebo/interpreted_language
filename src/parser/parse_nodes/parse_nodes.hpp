@@ -19,7 +19,12 @@ namespace parse_nodes
     public:
         const std::vector<statement_nodes::StatementNodeContainer> & statement_nodes();
         unsigned long token_count();
-        static StatementSequenceNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
+        
+        static StatementSequenceNode parse_tokens(
+            const std::vector<Token> & toks,
+            unsigned long start_idx,
+            TokenType stop_parsing_tok);
+        
         void print_node(unsigned int indentation_level);
     };
 }

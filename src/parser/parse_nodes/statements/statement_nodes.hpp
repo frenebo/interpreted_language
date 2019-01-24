@@ -14,14 +14,28 @@ namespace parse_nodes
 
 namespace parse_nodes::statement_nodes
 {
+    class ExpressionStatementNode;
+    
     class IfStatementNode
     {
     private:
+        parse_nodes::compound_expression::CompoundExpNode _if_condition;
+        parse_nodes::StatementSequenceNode* _if_body;
         unsigned long _token_count;
 
-        IfStatementNode(unsigned long token_count);
+        IfStatementNode(
+            parse_nodes::compound_expression::CompoundExpNode if_condition,
+            parse_nodes::StatementSequenceNode if_body,
+            unsigned long token_count
+        );
     public:
+        IfStatementNode(const IfStatementNode & old_node) noexcept;
+        IfStatementNode& operator=(const IfStatementNode& other) noexcept;
+        ~IfStatementNode() noexcept;
+        
         unsigned long token_count() const;
+        parse_nodes::StatementSequenceNode if_body() const;
+        parse_nodes::compound_expression::CompoundExpNode if_condition() const;
         void print_node(unsigned int indentation_level) const;
         static bool look_ahead(TokenType next_tok_type);
         static IfStatementNode parse_tokens(const std::vector<Token> & toks, unsigned long start_idx);
