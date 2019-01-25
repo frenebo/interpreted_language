@@ -22,6 +22,7 @@ enum TokenType {
     CLOSE_BRACE_CH,
     FOR_KEYWORD,
     IF_KEYWORD,
+    VAR_KEYWORD,
 };
 
 std::string token_type_to_string(TokenType);

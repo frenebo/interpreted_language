@@ -24,6 +24,8 @@ std::string token_type_to_string(TokenType tok_type)
     {
     case TokenType::SEMICOLON_CH:
         return "Semicolon Character";
+    case TokenType::VAR_KEYWORD:
+        return "Var Keyword";
     // case TokenType::COLON_CH:
     //     return "Colon Character";
     case TokenType::IDENTIFIER:

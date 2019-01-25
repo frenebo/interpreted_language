@@ -8,6 +8,8 @@ a + b + 1;
 asdfasd2f = 1 + 11.2;
 a.asdf;
 
+var a = b = 11034.3;
+
 if (1)
 {
     a = a + 10;

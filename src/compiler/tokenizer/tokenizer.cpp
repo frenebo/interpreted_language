@@ -47,11 +47,11 @@ namespace tokenizer
         return TokenizerResult(without_whitespace);
     }
 
+    // @TODO: settings, like to recover from an error instead of crashing?
     Tokenizer::Tokenizer()
     {
         this->simple_tok_strings = {
             { TokenType::SEMICOLON_CH, ";" },
-            // { TokenType::COLON_CH, ":" },
             { TokenType::MINUS_CH, "-" },
             { TokenType::PLUS_CH, "+" },
             { TokenType::DIVIDE_CH, "/" },
@@ -64,6 +64,7 @@ namespace tokenizer
             { TokenType::CLOSE_BRACE_CH, "}" },
             { TokenType::FOR_KEYWORD, "for" },
             { TokenType::IF_KEYWORD, "if" },
+            { TokenType::VAR_KEYWORD, "var" },
         };
     }
 

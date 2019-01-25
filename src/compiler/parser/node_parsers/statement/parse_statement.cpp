@@ -7,9 +7,46 @@
 #include "../compound_expression/parse_compound_expression.hpp"
 #include "../check_for_tok_type/check_for_tok_type.hpp"
 #include "../statement_sequence/parse_statement_sequence.hpp"
+#include "../simple_expression/parse_simple_expression.hpp"
 
 namespace parser::statement
 {
+    ParseResult<syntax_tree::statements::VariableDeclaration> parse_var_declaration(
+        const std::vector<Token> & toks,
+        unsigned long start_idx)
+    {
+        unsigned long consumed = 0;
+
+        // variable keyword
+        parser::check_for_tok_type(TokenType::VAR_KEYWORD, toks, start_idx + consumed);
+        consumed++;
+
+        // variable identifier
+        auto var_identifier_parse_result =
+            parser::simple_expression::parse_identifier_expression(toks, start_idx + consumed);
+        consumed += var_identifier_parse_result.token_count();
+
+        // equals sign
+        parser::check_for_tok_type(TokenType::EQUALS_CH, toks, start_idx + consumed);
+        consumed++;
+
+        // variable assign expression
+        auto var_assign_compound_exp =
+            parser::compound_expression::parse_compound_expression(toks, start_idx + consumed);
+        consumed += var_assign_compound_exp.token_count();
+
+        // semicolon
+        parser::check_for_tok_type(TokenType::SEMICOLON_CH, toks, start_idx + consumed);
+        consumed++;
+
+        return ParseResult<syntax_tree::statements::VariableDeclaration>(
+            syntax_tree::statements::VariableDeclaration(
+                var_identifier_parse_result.parsed_val(),
+                var_assign_compound_exp.parsed_val()
+            ),
+            consumed
+        );
+    }
     ParseResult<syntax_tree::statements::IfStatement> parse_if_statement(
         const std::vector<Token> & toks,
         unsigned long start_idx)
@@ -96,6 +133,15 @@ namespace parser::statement
             return ParseResult<syntax_tree::statements::StatementContainer>(
                 syntax_tree::statements::StatementContainer(if_statement_parse_result.parsed_val()),
                 if_statement_parse_result.token_count()
+            );
+        }
+        else if (next_tok_type == TokenType::VAR_KEYWORD)
+        {
+            auto var_declaration_parse_result = parse_var_declaration(toks, start_idx);
+
+            return ParseResult<syntax_tree::statements::StatementContainer>(
+                syntax_tree::statements::StatementContainer(var_declaration_parse_result.parsed_val()),
+                var_declaration_parse_result.token_count()
             );
         }
         else

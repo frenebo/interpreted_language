@@ -4,6 +4,7 @@
 #include <variant>
 
 #include "../compound_expression/compound_expression.hpp"
+#include "../simple_expressions/simple_expressions.hpp"
 
 namespace syntax_tree::statement_sequence
 {
@@ -32,6 +33,30 @@ namespace syntax_tree::statements
 
         const syntax_tree::statement_sequence::StatementSequence & if_body() const;
     };
+
+    class VariableDeclaration
+    {
+        syntax_tree::simple_expressions::IdentifierExpression _variable_identifier;
+        syntax_tree::compound_expression::CompoundExpression _assigned_compound_exp;
+    public:
+        VariableDeclaration(
+            syntax_tree::simple_expressions::IdentifierExpression variable_identifier,
+            syntax_tree::compound_expression::CompoundExpression assigned_compound_exp)
+        : _variable_identifier(variable_identifier),
+        _assigned_compound_exp(assigned_compound_exp)
+        {
+        }
+
+        const syntax_tree::simple_expressions::IdentifierExpression & variable_identifier() const
+        {
+            return _variable_identifier;
+        }
+
+        const syntax_tree::compound_expression::CompoundExpression & assigned_compound_exp() const
+        {
+            return _assigned_compound_exp;
+        }
+    };
     
     class ExpressionStatement
     {
@@ -51,9 +76,17 @@ namespace syntax_tree::statements
     class StatementContainer
     {
     private:
-        std::variant<ExpressionStatement, IfStatement> _contained_statement;
+        std::variant<
+            ExpressionStatement,
+            IfStatement,
+            VariableDeclaration
+        > _contained_statement;
     public:
-        StatementContainer(std::variant<ExpressionStatement, IfStatement> contained_statement)
+        StatementContainer(std::variant<
+            ExpressionStatement,
+            IfStatement,
+            VariableDeclaration
+        > contained_statement)
         : _contained_statement(contained_statement)
         {
         }
@@ -68,7 +101,16 @@ namespace syntax_tree::statements
         {
         }
 
-        const std::variant<ExpressionStatement, IfStatement> & contained_statement() const
+        StatementContainer(VariableDeclaration contained_statement)
+        : _contained_statement(contained_statement)
+        {
+        }
+
+        const std::variant<
+            ExpressionStatement,
+            IfStatement,
+            VariableDeclaration
+        > & contained_statement() const
         {
             return _contained_statement;
         }
