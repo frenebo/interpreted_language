@@ -6,6 +6,8 @@
 #include "tokens/tokens.hpp"
 #include "tokenizer/tokenizer.hpp"
 #include "parser/parser.hpp"
+#include "syntax_tree/statement_sequence/statement_sequence.hpp"
+#include "syntax_tree/statements/statements.hpp"
 
 namespace compiler
 {
@@ -16,6 +18,9 @@ namespace compiler
 
     void Compiler::compile_text(std::string text_to_parse) const
     {
+        new syntax_tree::statement_sequence::StatementSequence(
+            std::vector<syntax_tree::statements::StatementContainer>()
+        );
         try
         {
 

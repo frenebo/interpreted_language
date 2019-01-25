@@ -1,5 +1,5 @@
-#ifndef OPERATOR_EXTENSIONS_H
-#define OPERATOR_EXTENSIONS_H
+#ifndef OLD_OPERATOR_EXTENSIONS_H
+#define OLD_OPERATOR_EXTENSIONS_H
 
 #include <vector>
 #include <variant>

@@ -1,5 +1,5 @@
-#ifndef SIMPLE_EXPRESSIONS_H
-#define SIMPLE_EXPRESSIONS_H
+#ifndef OLD_SIMPLE_EXPRESSIONS_H
+#define OLD_SIMPLE_EXPRESSIONS_H
 
 #include <variant>
 #include <string>

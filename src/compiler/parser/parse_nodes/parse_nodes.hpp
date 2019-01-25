@@ -1,5 +1,5 @@
-#ifndef PARSE_NODES_H
-#define PARSE_NODES_H
+#ifndef OLD_PARSE_NODES_H
+#define OLD_PARSE_NODES_H
 
 #include <vector>
 #include <optional>

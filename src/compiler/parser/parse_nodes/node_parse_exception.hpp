@@ -1,5 +1,5 @@
-#ifndef NODE_PARSE_EXCEPTION
-#define NODE_PARSE_EXCEPTION
+#ifndef OLD_NODE_PARSE_EXCEPTION
+#define OLD_NODE_PARSE_EXCEPTION
 
 #include <string>
 #include <exception>

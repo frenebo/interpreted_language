@@ -1,5 +1,5 @@
-#ifndef STATEMENT_NODES_H
-#define STATEMENT_NODES_H
+#ifndef OLD_STATEMENT_NODES_H
+#define OLD_STATEMENT_NODES_H
 
 #include <vector>
 #include <variant>
