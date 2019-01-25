@@ -26,14 +26,22 @@ namespace parser::statement
             parser::simple_expression::parse_identifier_expression(toks, start_idx + consumed);
         consumed += var_identifier_parse_result.token_count();
 
-        // equals sign
-        parser::check_for_tok_type(TokenType::EQUALS_CH, toks, start_idx + consumed);
-        consumed++;
+        std::optional<syntax_tree::compound_expression::CompoundExpression> optional_declaration_value;
 
-        // variable assign expression
-        auto var_assign_compound_exp =
-            parser::compound_expression::parse_compound_expression(toks, start_idx + consumed);
-        consumed += var_assign_compound_exp.token_count();
+        // optional assignment of declared variable
+        if (toks[start_idx + consumed].get_type() == TokenType::EQUALS_CH)
+        {
+            // equals sign
+            parser::check_for_tok_type(TokenType::EQUALS_CH, toks, start_idx + consumed);
+            consumed++;
+
+            // variable assign expression
+            auto var_assign_compound_exp =
+                parser::compound_expression::parse_compound_expression(toks, start_idx + consumed);
+            consumed += var_assign_compound_exp.token_count();
+
+            optional_declaration_value = var_assign_compound_exp.parsed_val();
+        }
 
         // semicolon
         parser::check_for_tok_type(TokenType::SEMICOLON_CH, toks, start_idx + consumed);
@@ -42,7 +50,7 @@ namespace parser::statement
         return ParseResult<syntax_tree::statements::VariableDeclaration>(
             syntax_tree::statements::VariableDeclaration(
                 var_identifier_parse_result.parsed_val(),
-                var_assign_compound_exp.parsed_val()
+                optional_declaration_value
             ),
             consumed
         );

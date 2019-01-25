@@ -2,6 +2,7 @@
 #define STATEMENTS_H
 
 #include <variant>
+#include <optional>
 
 #include "../compound_expression/compound_expression.hpp"
 #include "../simple_expressions/simple_expressions.hpp"
@@ -37,7 +38,7 @@ namespace syntax_tree::statements
     class VariableDeclaration
     {
         syntax_tree::simple_expressions::IdentifierExpression _variable_identifier;
-        syntax_tree::compound_expression::CompoundExpression _assigned_compound_exp;
+        std::optional<syntax_tree::compound_expression::CompoundExpression> _assigned_compound_exp;
     public:
         VariableDeclaration(
             syntax_tree::simple_expressions::IdentifierExpression variable_identifier,
@@ -47,12 +48,26 @@ namespace syntax_tree::statements
         {
         }
 
+        VariableDeclaration(
+            syntax_tree::simple_expressions::IdentifierExpression variable_identifier,
+            std::optional<syntax_tree::compound_expression::CompoundExpression> assigned_compound_exp)
+        : _variable_identifier(variable_identifier),
+        _assigned_compound_exp(assigned_compound_exp)
+        {
+        }
+
+        VariableDeclaration(
+            syntax_tree::simple_expressions::IdentifierExpression variable_identifier)
+        : _variable_identifier(variable_identifier)
+        {
+        }
+
         const syntax_tree::simple_expressions::IdentifierExpression & variable_identifier() const
         {
             return _variable_identifier;
         }
 
-        const syntax_tree::compound_expression::CompoundExpression & assigned_compound_exp() const
+        const std::optional<syntax_tree::compound_expression::CompoundExpression> & assigned_compound_exp() const
         {
             return _assigned_compound_exp;
         }
