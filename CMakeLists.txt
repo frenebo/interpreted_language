@@ -11,6 +11,5 @@ file(GLOB_RECURSE proj_SRC
 
 add_executable(lang ${proj_SRC})
 
-# -Os for file size?
-SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Wswitch-enum -Os")
+SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Wswitch-enum")
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
