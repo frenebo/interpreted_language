@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "tokenizer.hpp"
-#include "../tokens.hpp"
+#include "../tokens/tokens.hpp"
 
 namespace tokenizer
 {

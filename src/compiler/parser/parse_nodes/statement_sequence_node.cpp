@@ -4,7 +4,7 @@
 #include <string>
 
 #include "statements/statement_nodes.hpp"
-#include "../../tokens.hpp"
+#include "../../tokens/tokens.hpp"
 #include "node_parse_exception.hpp"
 #include "parse_nodes.hpp"
 

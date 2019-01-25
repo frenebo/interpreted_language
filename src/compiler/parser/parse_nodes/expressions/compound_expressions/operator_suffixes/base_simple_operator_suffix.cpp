@@ -4,7 +4,7 @@
 
 #include "../../../node_parse_exception.hpp"
 #include "operator_suffixes.hpp"
-#include "../../../../../tokens.hpp"
+#include "../../../../../tokens/tokens.hpp"
 #include "../../simple_expressions/simple_expressions.hpp"
 
 namespace parse_nodes::operator_suffixes

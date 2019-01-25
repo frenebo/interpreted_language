@@ -1,7 +1,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#include "../tokens.hpp"
+#include "../tokens/tokens.hpp"
 #include <string>
 #include <vector>
 #include <optional>

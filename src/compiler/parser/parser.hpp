@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "../tokens.hpp"
+#include "../tokens/tokens.hpp"
 #include "parse_nodes/parse_nodes.hpp"
 #include <vector>
 #include <string>

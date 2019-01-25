@@ -2,7 +2,7 @@
 #include <vector>
 #include <ctime>
 
-#include "compiler/tokens.hpp"
+#include "compiler/tokens/tokens.hpp"
 #include "compiler/parser/parser.hpp"
 #include "compiler/parser/parse_nodes/parse_nodes.hpp"
 #include "compiler/tokenizer/tokenizer.hpp"
