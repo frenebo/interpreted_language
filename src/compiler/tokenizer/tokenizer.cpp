@@ -9,7 +9,7 @@
 
 namespace tokenizer
 {
-    std::variant<TokenizerResult, TokenizerErrorReturn> Tokenizer::tokenize(const std::string & input_str) const
+    TokenizerResult Tokenizer::tokenize(const std::string & input_str) const
     {
         std::vector<Token> toks;
 
@@ -22,9 +22,7 @@ namespace tokenizer
 
             if (!possible_match.has_value())
             {
-                return std::variant<TokenizerResult, TokenizerErrorReturn>(
-                    TokenizerErrorReturn("Could not process input text")
-                );
+                throw TokenizerException("Could not process input text");
             }
 
             input_start_idx += possible_match->get_contents().length();
@@ -46,9 +44,7 @@ namespace tokenizer
             }
         }
 
-        return std::variant<TokenizerResult, TokenizerErrorReturn>(
-            TokenizerResult(without_whitespace)
-        );
+        return TokenizerResult(without_whitespace);
     }
 
     Tokenizer::Tokenizer()

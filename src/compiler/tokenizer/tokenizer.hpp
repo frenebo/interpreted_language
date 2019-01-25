@@ -11,6 +11,16 @@
 
 namespace tokenizer
 {
+    class TokenizerException: public std::exception {
+    private:
+        std::string message_;
+    public:
+        explicit TokenizerException(const std::string& message) : message_(message) {};
+        virtual const char* what() const throw() {
+            return message_.c_str();
+        }
+    };
+    
     class TokenizerResult
     {
     private:
@@ -18,15 +28,6 @@ namespace tokenizer
     public:
         TokenizerResult(std::vector<Token> tokens);
         const std::vector<Token> & tokens() const;
-    };
-    
-    class TokenizerErrorReturn
-    {
-    private:
-        std::string _message;
-    public:
-        TokenizerErrorReturn(std::string message);
-        void print_error() const;
     };
 
     class Tokenizer
@@ -37,7 +38,7 @@ namespace tokenizer
         std::optional<Token> try_match_longest_token(const std::string & input_str, unsigned long input_start_idx) const;
     public:
         Tokenizer();
-        std::variant<TokenizerResult, TokenizerErrorReturn> tokenize(const std::string & input_str) const;
+        TokenizerResult tokenize(const std::string & input_str) const;
     };
 }
 
