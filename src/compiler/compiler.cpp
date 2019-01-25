@@ -6,6 +6,7 @@
 #include "tokens/tokens.hpp"
 #include "tokenizer/tokenizer.hpp"
 #include "parser/parser.hpp"
+#include "parser/parser_exception.hpp"
 #include "syntax_tree/statement_sequence/statement_sequence.hpp"
 #include "syntax_tree/statements/statements.hpp"
 
@@ -43,7 +44,7 @@ namespace compiler
             std::cout << "Tokenizer Error: " << ex.what() << "\n";
             return;
         }
-        catch (const parser::ParseException & ex)
+        catch (const parser::ParserException & ex)
         {
             std::cout << "Parser Error: " << ex.what() << "\n";
             return;
