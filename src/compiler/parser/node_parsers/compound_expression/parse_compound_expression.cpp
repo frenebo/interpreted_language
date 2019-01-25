@@ -9,6 +9,25 @@
 
 namespace parser::compound_expression
 {
+    ParseResult<syntax_tree::compound_expression::operator_suffixes::DotOperatorSuffix> parse_dot_op_suffix(
+        const std::vector<Token> & toks,
+        unsigned long start_idx)
+    {
+        parser::check_for_tok_type(TokenType::PERIOD_CH, toks, start_idx);
+        unsigned long consumed = 1; // one for the equals ch
+
+        auto next_simple_exp_result = parser::simple_expression::parse_simple_expression(toks, start_idx + consumed);
+
+        consumed += next_simple_exp_result.token_count();
+
+        return ParseResult(
+            syntax_tree::compound_expression::operator_suffixes::DotOperatorSuffix(
+                next_simple_exp_result.parsed_val()
+            ),
+            consumed
+        );
+    }
+    
     ParseResult<syntax_tree::compound_expression::operator_suffixes::AssignmentOperatorSuffix> parse_assignment_suffix(
         const std::vector<Token> & toks,
         unsigned long start_idx)
@@ -86,6 +105,17 @@ namespace parser::compound_expression
 
                 op_suffix_containers.push_back(suffix_container);
                 consumed += assign_parse_result.token_count();
+            }
+            else if (next_tok_type == TokenType::PERIOD_CH)
+            {
+                auto dot_op_parse_result = parse_dot_op_suffix(toks, start_idx + consumed);
+
+                auto suffix_container = syntax_tree::compound_expression::operator_suffixes::OperatorSuffixContainer(
+                    dot_op_parse_result.parsed_val()
+                );
+
+                op_suffix_containers.push_back(suffix_container);
+                consumed += dot_op_parse_result.token_count();
             }
             else
             {
