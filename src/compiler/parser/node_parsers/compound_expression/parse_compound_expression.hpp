@@ -1,5 +1,5 @@
 #ifndef PARSER_COMPOUND_EXPRESSION_H
-#define PARSER_COMPOUNE_EXPRESSION_H
+#define PARSER_COMPOUND_EXPRESSION_H
 
 namespace parser::compound_expression
 {
