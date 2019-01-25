@@ -27,11 +27,16 @@ namespace syntax_tree::compound_expression::operator_suffixes
         using BaseOperatorSuffix::BaseOperatorSuffix;
     };
 
+    class AssignmentOperatorSuffix: BaseOperatorSuffix
+    {
+        using BaseOperatorSuffix::BaseOperatorSuffix;
+    };
+
     class OperatorSuffixContainer
     {
-        std::variant<AdditionOperatorSuffix> _contained_operator_suffix;
+        std::variant<AdditionOperatorSuffix, AssignmentOperatorSuffix> _contained_operator_suffix;
     public:
-        OperatorSuffixContainer(std::variant<AdditionOperatorSuffix> contained_operator_suffix)
+        OperatorSuffixContainer(std::variant<AdditionOperatorSuffix, AssignmentOperatorSuffix> contained_operator_suffix)
         : _contained_operator_suffix(contained_operator_suffix)
         {
         }
@@ -41,7 +46,12 @@ namespace syntax_tree::compound_expression::operator_suffixes
         {
         }
 
-        const std::variant<AdditionOperatorSuffix> & contained_operator_suffix() const
+        OperatorSuffixContainer(AssignmentOperatorSuffix contained_operator_suffix)
+        : _contained_operator_suffix(contained_operator_suffix)
+        {
+        }
+
+        const std::variant<AdditionOperatorSuffix, AssignmentOperatorSuffix> & contained_operator_suffix() const
         {
             return _contained_operator_suffix;
         }
