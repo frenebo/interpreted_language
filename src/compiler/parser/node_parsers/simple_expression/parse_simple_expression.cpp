@@ -61,7 +61,20 @@ namespace parser::simple_expression
         }
         else if (next_tok_type == TokenType::NUMBER)
         {
+            auto number_parse_result = parse_number_expression(toks, start_idx);
+            auto simple_container = syntax_tree::simple_expressions::SimpleExpressionContainer(number_parse_result.parsed_val());
+
+            return parser::ParseResult<syntax_tree::simple_expressions::SimpleExpressionContainer>(
+                simple_container,
+                number_parse_result.token_count()
+            );
             // auto number_parse_result = parse_number_expression(toks, start_idx);
+        }
+        else
+        {
+            throw ParserException(
+                "Expected expression, got " + token_type_to_string(next_tok_type)
+            );
         }
     }
 }

@@ -32,9 +32,9 @@ namespace syntax_tree::simple_expressions
     
     class SimpleExpressionContainer
     {
-        std::variant<IdentifierExpression> _contained_expression;
+        std::variant<IdentifierExpression, NumberExpression> _contained_expression;
     public:
-        SimpleExpressionContainer(std::variant<IdentifierExpression> contained_expression)
+        SimpleExpressionContainer(std::variant<IdentifierExpression, NumberExpression> contained_expression)
         : _contained_expression(contained_expression)
         {
         }
@@ -44,7 +44,12 @@ namespace syntax_tree::simple_expressions
         {
         }
 
-        const std::variant<IdentifierExpression> & contained_expression() const
+        SimpleExpressionContainer(NumberExpression contained_expression)
+        : _contained_expression(contained_expression)
+        {
+        }
+
+        const std::variant<IdentifierExpression, NumberExpression> & contained_expression() const
         {
             return _contained_expression;
         }

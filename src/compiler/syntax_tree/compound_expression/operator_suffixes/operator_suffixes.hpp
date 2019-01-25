@@ -24,7 +24,7 @@ namespace syntax_tree::compound_expression::operator_suffixes
     
     class AdditionOperatorSuffix : BaseOperatorSuffix
     {
-
+        using BaseOperatorSuffix::BaseOperatorSuffix;
     };
 
     class OperatorSuffixContainer
@@ -32,6 +32,11 @@ namespace syntax_tree::compound_expression::operator_suffixes
         std::variant<AdditionOperatorSuffix> _contained_operator_suffix;
     public:
         OperatorSuffixContainer(std::variant<AdditionOperatorSuffix> contained_operator_suffix)
+        : _contained_operator_suffix(contained_operator_suffix)
+        {
+        }
+
+        OperatorSuffixContainer(AdditionOperatorSuffix contained_operator_suffix)
         : _contained_operator_suffix(contained_operator_suffix)
         {
         }
