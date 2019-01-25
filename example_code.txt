@@ -9,7 +9,7 @@ asdfasd2f = 1 + 11.2;
 a.asdf;
 
 var a = b = 11034.3;
-var adsfasdf 1;
+var adsfasdf = 1;
 
 if (1)
 {
