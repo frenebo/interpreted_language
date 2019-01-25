@@ -19,9 +19,9 @@ namespace syntax_tree::compound_expression::operator_suffixes
         const syntax_tree::simple_expressions::SimpleExpressionContainer & right_hand_simple_exp() const
         {
             return _right_hand_simple_exp;
-        }        
+        }
     };
-    
+
     class AdditionOperatorSuffix : BaseOperatorSuffix
     {
         using BaseOperatorSuffix::BaseOperatorSuffix;

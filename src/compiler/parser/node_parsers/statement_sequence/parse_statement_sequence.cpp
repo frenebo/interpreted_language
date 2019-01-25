@@ -18,7 +18,7 @@ namespace parser::statement_sequence
         while (toks[start_idx + consumed].get_type() != end_token)
         {
             auto statement_parse_result = parser::statement::parse_statement(toks, start_idx + consumed);
-            
+
             consumed += statement_parse_result.token_count();
             statement_containers.push_back(statement_parse_result.parsed_val());
         }

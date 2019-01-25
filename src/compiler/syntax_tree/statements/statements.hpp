@@ -72,7 +72,7 @@ namespace syntax_tree::statements
             return _assigned_compound_exp;
         }
     };
-    
+
     class ExpressionStatement
     {
         syntax_tree::compound_expression::CompoundExpression _contained_compound_exp;
@@ -87,7 +87,7 @@ namespace syntax_tree::statements
             return _contained_compound_exp;
         }
     };
-    
+
     class StatementContainer
     {
     private:

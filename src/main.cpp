@@ -14,13 +14,13 @@ int main(int argc, char *argv[])
     }
     // std::cout << argc << "\n";
     std::string file_name = std::string(argv[1]);
-    
+
     std::ifstream input_file = std::ifstream(file_name);
 
     std::string input_text;
     if (input_file.is_open())
     {
-        input_file.seekg(0, std::ios::end);   
+        input_file.seekg(0, std::ios::end);
         input_text.reserve(input_file.tellg());
         input_file.seekg(0, std::ios::beg);
 

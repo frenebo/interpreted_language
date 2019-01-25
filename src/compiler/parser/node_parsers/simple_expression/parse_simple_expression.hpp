@@ -18,7 +18,7 @@ namespace parser::simple_expression
         const std::vector<Token> & toks,
         unsigned long start_idx
     );
-    
+
     parser::ParseResult<syntax_tree::simple_expressions::SimpleExpressionContainer> parse_simple_expression(
         const std::vector<Token> & toks,
         unsigned long start_idx

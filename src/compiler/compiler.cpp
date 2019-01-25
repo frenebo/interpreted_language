@@ -24,7 +24,6 @@ namespace compiler
         );
         try
         {
-
             std::clock_t tokenizer_clock_start = std::clock();
             tokenizer::TokenizerResult tokenizer_result = tokenizer::Tokenizer().tokenize(text_to_parse);
             double tokenizer_duration = ( std::clock() - tokenizer_clock_start ) / (double) CLOCKS_PER_SEC;

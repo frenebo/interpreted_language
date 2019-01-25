@@ -14,12 +14,12 @@ namespace parser
         _token_count(token_count)
         {
         }
-        
+
         T parsed_val() const
         {
             return _parsed_val;
         }
-        
+
         unsigned long token_count() const
         {
             return _token_count;

@@ -98,7 +98,7 @@ namespace parser::statement
             consumed
         );
     }
-    
+
     ParseResult<syntax_tree::statements::ExpressionStatement> parse_expression_statement(
         const std::vector<Token> & toks,
         unsigned long start_idx)
@@ -127,7 +127,7 @@ namespace parser::statement
             consumed
         );
     }
-    
+
     ParseResult<syntax_tree::statements::StatementContainer> parse_statement(
         const std::vector<Token> & toks,
         unsigned long start_idx)

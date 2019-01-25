@@ -29,7 +29,7 @@ namespace syntax_tree::simple_expressions
 
         std::string number_string() const { return _number_string; }
     };
-    
+
     class SimpleExpressionContainer
     {
         std::variant<IdentifierExpression, NumberExpression> _contained_expression;

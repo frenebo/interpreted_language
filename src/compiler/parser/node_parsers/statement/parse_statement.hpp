@@ -23,7 +23,7 @@ namespace parser::statement
         const std::vector<Token> & toks,
         unsigned long start_idx
     );
-    
+
     ParseResult<syntax_tree::statements::StatementContainer> parse_statement(
         const std::vector<Token> & toks,
         unsigned long start_idx

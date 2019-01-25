@@ -8,7 +8,7 @@ namespace parser::simple_expression
         unsigned long start_idx)
     {
         TokenType expect_identifier_type = toks[start_idx].get_type();
-        
+
         if (expect_identifier_type != TokenType::IDENTIFIER)
         {
             throw ParserException(
@@ -28,7 +28,7 @@ namespace parser::simple_expression
         unsigned long start_idx)
     {
         TokenType expect_identifier_type = toks[start_idx].get_type();
-        
+
         if (expect_identifier_type != TokenType::NUMBER)
         {
             throw ParserException(
@@ -42,7 +42,7 @@ namespace parser::simple_expression
             1 // one for the single identifier token
         );
     }
-    
+
     parser::ParseResult<syntax_tree::simple_expressions::SimpleExpressionContainer> parse_simple_expression(
         const std::vector<Token> & toks,
         unsigned long start_idx)
@@ -53,7 +53,7 @@ namespace parser::simple_expression
         {
             auto identifier_parse_result = parse_identifier_expression(toks, start_idx);
             auto simple_container = syntax_tree::simple_expressions::SimpleExpressionContainer(identifier_parse_result.parsed_val());
-            
+
             return parser::ParseResult<syntax_tree::simple_expressions::SimpleExpressionContainer>(
                 simple_container,
                 identifier_parse_result.token_count()

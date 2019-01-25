@@ -3,7 +3,7 @@
 
 namespace intermediate_lang
 {
-    
+
 }
 
 #endif

@@ -26,7 +26,7 @@ namespace tokenizer
             }
 
             input_start_idx += possible_match->get_contents().length();
-            
+
             toks.push_back(*possible_match);
         }
 
@@ -91,12 +91,12 @@ namespace tokenizer
                 {
                     TokenType tok_type = tok_strings_pair.first;
                     std::string tok_contents = tok_strings_pair.second;
-                    
+
                     result_tok = Token(tok_type, tok_contents);
                 }
             }
         }
-        
+
         return result_tok;
     }
 
@@ -196,7 +196,7 @@ namespace tokenizer
     std::optional<Token> Tokenizer::try_match_longest_token(const std::string & input_str, unsigned long input_start_idx) const
     {
         std::optional<Token> result_tok;
-        
+
         std::optional<Token> matches[] = {
             this->try_match_longest_simple_token(input_str, input_start_idx),
             match_longest_identifier(input_str, input_start_idx),
@@ -217,7 +217,7 @@ namespace tokenizer
                 result_tok = matches[i];
             }
         }
-        
+
         return result_tok;
     }
 }

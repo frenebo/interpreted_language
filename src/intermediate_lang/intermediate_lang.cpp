@@ -2,5 +2,5 @@
 
 namespace intermediate_lang
 {
-    
+
 }

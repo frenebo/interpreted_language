@@ -16,7 +16,7 @@ namespace syntax_tree::statement_sequence
         : _statements(statements)
         {
         }
-        
+
         const std::vector<syntax_tree::statements::StatementContainer> & statements() const
         {
             return _statements;

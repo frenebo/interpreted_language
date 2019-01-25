@@ -20,7 +20,7 @@ namespace tokenizer
             return message_.c_str();
         }
     };
-    
+
     class TokenizerResult
     {
     private:
