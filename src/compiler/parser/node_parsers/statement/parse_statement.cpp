@@ -1,12 +1,59 @@
 #include <vector>
+#include <iostream>
 
 #include "../../../tokens/tokens.hpp"
 #include "parse_statement.hpp"
 #include "../../parser_exception.hpp"
 #include "../compound_expression/parse_compound_expression.hpp"
+#include "../check_for_tok_type/check_for_tok_type.hpp"
+#include "../statement_sequence/parse_statement_sequence.hpp"
 
 namespace parser::statement
 {
+    ParseResult<syntax_tree::statements::IfStatement> parse_if_statement(
+        const std::vector<Token> & toks,
+        unsigned long start_idx)
+    {
+        unsigned long consumed = 0;
+
+        // if keyword
+        parser::check_for_tok_type(TokenType::IF_KEYWORD, toks, start_idx + consumed);
+        consumed++;
+
+        // open parenthesis before if condition
+        parser::check_for_tok_type(TokenType::OPEN_PAREN_CH, toks, start_idx + consumed);
+        consumed++;
+
+        // if condition compound expression
+        auto if_condition_parse_result = parser::compound_expression::parse_compound_expression(toks, start_idx + consumed);
+        consumed += if_condition_parse_result.token_count();
+
+        // close parenthesis after if condition
+        parser::check_for_tok_type(TokenType::CLOSE_PAREN_CH, toks, start_idx + consumed);
+        consumed++;
+
+        // open brace before if body
+        parser::check_for_tok_type(TokenType::OPEN_BRACE_CH, toks, start_idx + consumed);
+        consumed++;
+
+        // if body statement sequence, with close brace token marking end of block
+        auto if_body_parse_result =
+            parser::statement_sequence::parse_statement_sequence(toks, start_idx + consumed, TokenType::CLOSE_BRACE_CH);
+        consumed += if_body_parse_result.token_count();
+
+        // close brace after if body
+        parser::check_for_tok_type(TokenType::CLOSE_BRACE_CH, toks, start_idx + consumed);
+        consumed++;
+
+        return ParseResult<syntax_tree::statements::IfStatement>(
+            syntax_tree::statements::IfStatement(
+                if_condition_parse_result.parsed_val(),
+                if_body_parse_result.parsed_val()
+            ),
+            consumed
+        );
+    }
+    
     ParseResult<syntax_tree::statements::ExpressionStatement> parse_expression_statement(
         const std::vector<Token> & toks,
         unsigned long start_idx)
@@ -40,11 +87,25 @@ namespace parser::statement
         const std::vector<Token> & toks,
         unsigned long start_idx)
     {
-        auto expression_statement_parse_result = parse_expression_statement(toks, start_idx);
+        TokenType next_tok_type = toks[start_idx].get_type();
 
-        return ParseResult<syntax_tree::statements::StatementContainer>(
-            syntax_tree::statements::StatementContainer(expression_statement_parse_result.parsed_val()),
-            expression_statement_parse_result.token_count()
-        );
+        if (next_tok_type == TokenType::IF_KEYWORD)
+        {
+            auto if_statement_parse_result = parse_if_statement(toks, start_idx);
+
+            return ParseResult<syntax_tree::statements::StatementContainer>(
+                syntax_tree::statements::StatementContainer(if_statement_parse_result.parsed_val()),
+                if_statement_parse_result.token_count()
+            );
+        }
+        else
+        {
+            auto expression_statement_parse_result = parse_expression_statement(toks, start_idx);
+
+            return ParseResult<syntax_tree::statements::StatementContainer>(
+                syntax_tree::statements::StatementContainer(expression_statement_parse_result.parsed_val()),
+                expression_statement_parse_result.token_count()
+            );
+        }
     }
 }

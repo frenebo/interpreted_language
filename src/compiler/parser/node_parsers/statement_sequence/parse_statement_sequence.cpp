@@ -5,7 +5,7 @@
 #include "../statement/parse_statement.hpp"
 #include "../../../syntax_tree/statements/statements.hpp"
 
-namespace parser
+namespace parser::statement_sequence
 {
     parser::ParseResult<syntax_tree::statement_sequence::StatementSequence> parse_statement_sequence(
         const std::vector<Token> & toks,

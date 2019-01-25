@@ -7,3 +7,8 @@ asdfasd2f = 1 + 11.2;
 a + b + 1;
 asdfasd2f = 1 + 11.2;
 a;
+
+if (1)
+{
+    a = a + 10;
+}

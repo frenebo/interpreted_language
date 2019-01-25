@@ -1,6 +1,8 @@
 #ifndef COMPOUND_EXPRESSION_H
 #define COMPOUND_EXPRESSION_H
 
+#include <vector>
+
 #include "../simple_expressions/simple_expressions.hpp"
 #include "operator_suffixes/operator_suffixes.hpp"
 

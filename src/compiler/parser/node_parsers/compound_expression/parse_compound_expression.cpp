@@ -1,5 +1,6 @@
 #include <vector>
 
+#include "../check_for_tok_type/check_for_tok_type.hpp"
 #include "../../../tokens/tokens.hpp"
 #include "../parse_result.hpp"
 #include "../../parser_exception.hpp"
@@ -8,25 +9,11 @@
 
 namespace parser::compound_expression
 {
-    void check_for_tok_type(
-        TokenType expected_type,
-        const std::vector<Token> & toks,
-        unsigned long start_idx)
-    {
-        if (toks[start_idx].get_type() != expected_type)
-        {
-            throw ParserException(
-                "Expected " + token_type_to_string(expected_type) +
-                ", got " + token_type_to_string(toks[start_idx].get_type())
-            );
-        }
-    }
-
     ParseResult<syntax_tree::compound_expression::operator_suffixes::AssignmentOperatorSuffix> parse_assignment_suffix(
         const std::vector<Token> & toks,
         unsigned long start_idx)
     {
-        check_for_tok_type(TokenType::EQUALS_CH, toks, start_idx);
+        parser::check_for_tok_type(TokenType::EQUALS_CH, toks, start_idx);
 
         // one for the equals ch
         unsigned long consumed = 1;
@@ -47,7 +34,7 @@ namespace parser::compound_expression
         const std::vector<Token> & toks,
         unsigned long start_idx)
     {
-        check_for_tok_type(TokenType::PLUS_CH, toks, start_idx);
+        parser::check_for_tok_type(TokenType::PLUS_CH, toks, start_idx);
 
         // one for the plus ch
         unsigned long consumed = 1;

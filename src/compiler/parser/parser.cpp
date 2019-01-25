@@ -15,6 +15,6 @@ namespace parser
 
     ParseResult<syntax_tree::statement_sequence::StatementSequence> Parser::parse_tokens(const std::vector<Token> & toks) const
     {
-        return parser::parse_statement_sequence(toks, 0, TokenType::END_OF_INPUT);
+        return parser::statement_sequence::parse_statement_sequence(toks, 0, TokenType::END_OF_INPUT);
     }
 }
