@@ -1,17 +1,12 @@
-a + b + 1;
-asdfasd2f = 1 + 11.2;
-a + b + 1;
-asdfasd2f = 1 + 11.2;
-a + b + 1;
-asdfasd2f = 1 + 11.2;
-a + b + 1;
-asdfasd2f = 1 + 11.2;
-a.asdf;
+a = 1;
+var b = 1;
 
-var a = b = 11034.3;
-var adsfasdf = 1;
-
-if (1)
+if (a + b)
 {
-    a = a + 10;
+    asdfasdf + 234234234;
 }
+
+// asdfa as dfas dfas fasd fasdffff//
+adfs;
+asdf = asdf + 2;
+//asdf

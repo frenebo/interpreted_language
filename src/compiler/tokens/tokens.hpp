@@ -23,6 +23,7 @@ enum TokenType {
     FOR_KEYWORD,
     IF_KEYWORD,
     VAR_KEYWORD,
+    COMMENT,
 };
 
 std::string token_type_to_string(TokenType);

@@ -5,7 +5,9 @@
 
 namespace il_interpreter
 {
-
+    // IlInterpreter::IlInterpreter()
+    // {
+    // }
 }
 
 #endif

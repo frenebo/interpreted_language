@@ -1,5 +1,7 @@
 #include "tokenizer.hpp"
 #include "../tokens/tokens.hpp"
+
+#include <iostream>
 #include <optional>
 #include <map>
 #include <ctype.h>
@@ -34,17 +36,21 @@ namespace tokenizer
         toks.push_back(Token(TokenType::END_OF_INPUT, ""));
 
         // don't return whitespace tokens
-        std::vector<Token> without_whitespace;
+        std::vector<Token> without_whitespace_or_tokens;
 
         for (Token tok : toks)
         {
-            if (tok.get_type() != TokenType::WHITESPACE)
+            TokenType tok_type = tok.get_type();
+            if (
+                tok_type != TokenType::WHITESPACE &&
+                tok_type != TokenType::COMMENT
+            )
             {
-                without_whitespace.push_back(tok);
+                without_whitespace_or_tokens.push_back(tok);
             }
         }
 
-        return TokenizerResult(without_whitespace);
+        return TokenizerResult(without_whitespace_or_tokens);
     }
 
     // @TODO: settings, like to recover from an error instead of crashing?
@@ -100,7 +106,40 @@ namespace tokenizer
         return result_tok;
     }
 
-    std::optional<Token> match_longest_identifier(const std::string & input_str, unsigned long input_start_idx)
+    std::optional<Token> try_match_longest_comment(const std::string & input_str, unsigned long input_start_idx)
+    {
+
+        if (
+            // if it doesn't have enough room to have the two forward slashes for a comment
+            input_str.length() < input_start_idx + 2 ||
+            // if the first token isn't a forward slash
+            input_str[input_start_idx] != '/' ||
+            // if the second token isn't a forward slash
+            input_str[input_start_idx + 1] != '/'
+        ) {
+            return std::optional<Token>();
+        }
+
+        unsigned long comment_length = 2; // for the two slashes so far
+
+        while (input_start_idx + comment_length < input_str.length())
+        {
+            comment_length++;
+
+            /**
+             * if the current token is a return character, that return character
+             * is the last character of the commend
+             */
+            if (input_str[input_start_idx + comment_length] == '\n')
+            {
+                break;
+            }
+        }
+
+        return Token(TokenType::COMMENT, input_str.substr(input_start_idx, comment_length));
+    }
+
+    std::optional<Token> try_match_longest_identifier(const std::string & input_str, unsigned long input_start_idx)
     {
         // if the first character isn't an alpha character, return
         if (!isalpha(input_str[input_start_idx]))
@@ -120,7 +159,7 @@ namespace tokenizer
         return Token(TokenType::IDENTIFIER, input_str.substr(input_start_idx, identifier_length));
     }
 
-    std::optional<Token> match_longest_whitespace(const std::string & input_str, unsigned long input_start_idx)
+    std::optional<Token> try_match_longest_whitespace(const std::string & input_str, unsigned long input_start_idx)
     {
         // if the first character isn't whitespace
         if (!isspace(input_str[input_start_idx]))
@@ -140,7 +179,7 @@ namespace tokenizer
         return Token(TokenType::WHITESPACE, input_str.substr(input_start_idx, identifier_length));
     }
 
-    std::optional<Token> match_longest_number(const std::string & input_str, unsigned long input_start_idx)
+    std::optional<Token> try_match_longest_number(const std::string & input_str, unsigned long input_start_idx)
     {
         // // if the first character isn't a digit or a period
         if (
@@ -193,15 +232,16 @@ namespace tokenizer
         return Token(TokenType::NUMBER, input_str.substr(input_start_idx, identifier_length));
     }
 
-    std::optional<Token> Tokenizer::try_match_longest_token(const std::string & input_str, unsigned long input_start_idx) const
+    std::optional<Token> Tokenizer::try_match_longest_token(const std::string & input_str, unsigned long start_ch_idx) const
     {
         std::optional<Token> result_tok;
 
         std::optional<Token> matches[] = {
-            this->try_match_longest_simple_token(input_str, input_start_idx),
-            match_longest_identifier(input_str, input_start_idx),
-            match_longest_whitespace(input_str, input_start_idx),
-            match_longest_number(input_str, input_start_idx),
+            this->try_match_longest_simple_token(input_str, start_ch_idx),
+            try_match_longest_identifier(input_str, start_ch_idx),
+            try_match_longest_whitespace(input_str, start_ch_idx),
+            try_match_longest_number(input_str, start_ch_idx),
+            try_match_longest_comment(input_str, start_ch_idx),
         };
 
         for (unsigned int i = 0; i < sizeof(matches)/sizeof(matches[0]); i++)

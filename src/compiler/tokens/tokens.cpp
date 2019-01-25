@@ -60,6 +60,8 @@ std::string token_type_to_string(TokenType tok_type)
         return "For Keyword";
     case TokenType::IF_KEYWORD:
         return "If Keyword";
+    case TokenType::COMMENT:
+        return "Comment Token";
     default:
         return "Unknown Token";
     }

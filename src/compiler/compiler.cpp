@@ -19,9 +19,6 @@ namespace compiler
 
     void Compiler::compile_text(std::string text_to_parse) const
     {
-        new syntax_tree::statement_sequence::StatementSequence(
-            std::vector<syntax_tree::statements::StatementContainer>()
-        );
         try
         {
             std::clock_t tokenizer_clock_start = std::clock();

@@ -3,5 +3,10 @@
 
 namespace il_interpreter
 {
-
+    class IlInterpreter
+    {
+    public:
+        // @TODO add options?
+        IlInterpreter();
+    };
 }
