@@ -2,7 +2,13 @@
 
 namespace il_machine::values
 {
-    IlNumberValue::IlNumberValue()
+    IlNumberValue::IlNumberValue(double contained_num)
+    : _contained_num(contained_num)
     {
+    }
+
+    double IlNumberValue::contained_num() const
+    {
+        return _contained_num;
     }
 }

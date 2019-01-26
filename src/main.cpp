@@ -5,6 +5,7 @@
 
 #include "compiler/compiler.hpp"
 #include "il_machine/il_machine.hpp"
+#include "il_machine/il_runtime_exception.hpp"
 #include "intermediate_lang/instructions/instructions.hpp"
 
 int main(int argc, char *argv[])
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     else
     {
         std::cout << "Could not open file \"" << file_name << "\"\n";
+        return 1;
     }
 
     compiler::Compiler().compile_text(input_text);
@@ -44,7 +46,39 @@ int main(int argc, char *argv[])
         intermediate_lang::instructions::LoadConstNumberInstruction(10)
     );
 
-    il_machine::run_bytecode(
-        instructions
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(20)
     );
+
+    instructions.push_back(
+        intermediate_lang::instructions::AddNumbersInstruction()
+    );
+
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(20)
+    );
+
+    instructions.push_back(
+        intermediate_lang::instructions::AddNumbersInstruction()
+    );
+
+    instructions.push_back(
+        intermediate_lang::instructions::LogValueInstruction()
+    );
+
+    try
+    {
+        std::clock_t machine_clock_start = std::clock();
+        auto runtime = il_machine::create_runtime_from_bytecode(
+            instructions
+        );
+        runtime.start();
+        double machine_duration = ( std::clock() - machine_clock_start ) / (double) CLOCKS_PER_SEC;
+
+        std::cout << "Machine duration: " << machine_duration << " seconds\n";
+    }
+    catch (const il_machine::IlRuntimeException & ex)
+    {
+        std::cout << "RUNTIME EXCEPTION: " << ex.what() << "\n";
+    }
 }

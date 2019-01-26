@@ -5,6 +5,12 @@
 
 namespace intermediate_lang::instructions
 {
+    class AddNumbersInstruction
+    {
+    public:
+        AddNumbersInstruction();
+    };
+
     class LoadConstNumberInstruction
     {
         double _contained_num;
@@ -13,14 +19,36 @@ namespace intermediate_lang::instructions
         double get_value() const;
     };
 
+    class LogValueInstruction
+    {
+    public:
+        LogValueInstruction();
+    };
+
     class InstructionContainer
     {
-        std::variant<LoadConstNumberInstruction> _contained_instruction;
+        std::variant<
+            LoadConstNumberInstruction,
+            AddNumbersInstruction,
+            LogValueInstruction
+        > _contained_instruction;
     public:
+        InstructionContainer(
+            std::variant<
+                LoadConstNumberInstruction,
+                AddNumbersInstruction,
+                LogValueInstruction
+            > contained_instruction
+        );
         InstructionContainer(LoadConstNumberInstruction contained_instruction);
-        InstructionContainer(std::variant<LoadConstNumberInstruction> contained_instruction);
+        InstructionContainer(AddNumbersInstruction contained_instruction);
+        InstructionContainer(LogValueInstruction contained_instruction);
 
-        const std::variant<LoadConstNumberInstruction> & contained_instruction() const;
+        const std::variant<
+            LoadConstNumberInstruction,
+            AddNumbersInstruction,
+            LogValueInstruction
+        > & contained_instruction() const;
     };
 }
 

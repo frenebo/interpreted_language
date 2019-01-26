@@ -3,5 +3,5 @@
 
 namespace il_machine
 {
-    il_machine::runtime::IlRuntime run_bytecode(std::vector<intermediate_lang::instructions::InstructionContainer> instructions);
+    il_machine::runtime::IlRuntime create_runtime_from_bytecode(std::vector<intermediate_lang::instructions::InstructionContainer> instructions);
 }

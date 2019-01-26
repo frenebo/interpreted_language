@@ -4,18 +4,24 @@
 #include <vector>
 
 #include "../stack/stack.hpp"
+#include "../instruction_memory/instruction_memory.hpp"
 #include "../../intermediate_lang/instructions/instructions.hpp"
-#include "../stack/stack.hpp"
 
 namespace il_machine::runtime
 {
     class IlRuntime
     {
         il_machine::stack::IlStack _stack;
+        il_machine::instruction_memory::InstructionMemory _instruction_memory;
+
+        void execute_add_numbers();
+        void execute_log_value();
+        void execute_load_const_num(intermediate_lang::instructions::LoadConstNumberInstruction instruction);
 
     public:
         IlRuntime(
-            il_machine::stack::IlStack stack
+            il_machine::stack::IlStack stack,
+            il_machine::instruction_memory::InstructionMemory instruction_memory
         );
         void start();
     };

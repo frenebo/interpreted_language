@@ -1,4 +1,14 @@
-if (a + 2)
+a = 1;
+
+if (a)
 {
+    if (b)
+    {
+        if (c)
+        {
+
+        }
+    }
 }
-var b = 1 + 2 "asdfasdf" var ;
+
+b = asdf + 34 + 3 + 3.3 + a;
