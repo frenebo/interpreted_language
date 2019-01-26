@@ -36,12 +36,15 @@ namespace il_machine::runtime
             {
                 execute_log_value();
             }
+            else if (std::holds_alternative<intermediate_lang::instructions::LoadConstStringInstruction>(instruction_cont.contained_instruction()))
+            {
+                execute_load_const_string(std::get<intermediate_lang::instructions::LoadConstStringInstruction>(instruction_cont.contained_instruction()));
+            }
             else
             {
                 throw IlRuntimeException("Unimplemented instruction");
             }
         }
-        // _instruction_memory.memory_
     }
 
     void IlRuntime::execute_log_value()
@@ -54,6 +57,24 @@ namespace il_machine::runtime
 
             std::cout << "LOG: " << contained_num << "\n";
         }
+        else if (std::holds_alternative<il_machine::values::IlStringValue>(stack_val.contained_value()))
+        {
+            std::string contained_str = std::get<il_machine::values::IlStringValue>(stack_val.contained_value()).contained_string();
+
+            std::cout << "LOG: " << contained_str << "\n";
+        }
+        else
+        {
+            std::cout << "Unimplemented log value\n";
+        }
+    }
+
+    void IlRuntime::execute_load_const_string(intermediate_lang::instructions::LoadConstStringInstruction instruction)
+    {
+        il_machine::values::IlStringValue str_val = il_machine::values::IlStringValue(instruction.get_value());
+        il_machine::values::IlValueContainer val_container = il_machine::values::IlValueContainer(str_val);
+
+        _stack.push(val_container);
     }
 
     void IlRuntime::execute_load_const_num(intermediate_lang::instructions::LoadConstNumberInstruction instruction)

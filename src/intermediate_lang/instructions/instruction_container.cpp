@@ -5,6 +5,7 @@ namespace intermediate_lang::instructions
     InstructionContainer::InstructionContainer(
         std::variant<
             LoadConstNumberInstruction,
+            LoadConstStringInstruction,
             AddNumbersInstruction,
             LogValueInstruction
         > contained_instruction
@@ -14,6 +15,11 @@ namespace intermediate_lang::instructions
     }
 
     InstructionContainer::InstructionContainer(LoadConstNumberInstruction contained_instruction)
+    : _contained_instruction(contained_instruction)
+    {
+    }
+
+    InstructionContainer::InstructionContainer(LoadConstStringInstruction contained_instruction)
     : _contained_instruction(contained_instruction)
     {
     }
@@ -30,6 +36,7 @@ namespace intermediate_lang::instructions
 
     const std::variant<
         LoadConstNumberInstruction,
+        LoadConstStringInstruction,
         AddNumbersInstruction,
         LogValueInstruction
     > & InstructionContainer::contained_instruction() const
