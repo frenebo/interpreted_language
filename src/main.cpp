@@ -42,39 +42,29 @@ int main(int argc, char *argv[])
 
     std::vector<intermediate_lang::instructions::InstructionContainer> instructions;
 
-    for (int i = 0; i < 100; i++) {
-        instructions.push_back(
-            intermediate_lang::instructions::LoadConstNumberInstruction(10)
-        );
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(10)
+    );
 
-        instructions.push_back(
-            intermediate_lang::instructions::LoadConstNumberInstruction(20)
-        );
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(20)
+    );
 
-        instructions.push_back(
-            intermediate_lang::instructions::AddNumbersInstruction()
-        );
+    instructions.push_back(
+        intermediate_lang::instructions::AddNumbersInstruction()
+    );
 
-        instructions.push_back(
-            intermediate_lang::instructions::LoadConstNumberInstruction(20)
-        );
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(20)
+    );
 
-        instructions.push_back(
-            intermediate_lang::instructions::AddNumbersInstruction()
-        );
+    instructions.push_back(
+        intermediate_lang::instructions::AddNumbersInstruction()
+    );
 
-        instructions.push_back(
-            intermediate_lang::instructions::LogValueInstruction()
-        );
-
-        instructions.push_back(
-            intermediate_lang::instructions::LoadConstStringInstruction("Hello, World!")
-        );
-
-        instructions.push_back(
-            intermediate_lang::instructions::LogValueInstruction()
-        );
-    }
+    instructions.push_back(
+        intermediate_lang::instructions::LogValueInstruction()
+    );
 
     instructions.push_back(
         intermediate_lang::instructions::LoadConstStringInstruction("Hello, World!")
