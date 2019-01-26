@@ -1,0 +1,25 @@
+{
+    "name": "pk-lang",
+    "displayName": "pk lang",
+    "description": "syntax highlighting for pk language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.30.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "pkl",
+            "aliases": ["PK Lang", "pkl"],
+            "extensions": [".pkl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "pkl",
+            "scopeName": "source.pkl",
+            "path": "./syntaxes/pkl.tmLanguage.json"
+        }]
+    }
+}

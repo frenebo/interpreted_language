@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         intermediate_lang::instructions::LoadConstNumberInstruction(10)
     );
 
-    il_runtime::IlRuntime::run_bytecode(
+    il_machine::run_bytecode(
         instructions
     );
 }

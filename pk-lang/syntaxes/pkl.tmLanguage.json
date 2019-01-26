@@ -1,0 +1,42 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "PK Lang",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.pkl",
+					"match": "\\b(if|var)\\b"
+				},
+				{
+					"name": "keyword.control.assignment.pkl",
+					"match": "="
+				},
+				{
+					"name": "keyword.operator.plus.pkl",
+					"match": "\\+"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.pkl",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.pkl",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.pkl"
+}

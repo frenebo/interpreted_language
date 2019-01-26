@@ -1,0 +1,4 @@
+if (a + 2)
+{
+}
+var b = 1 + 2 "asdfasdf" var ;

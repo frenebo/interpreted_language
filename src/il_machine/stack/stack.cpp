@@ -7,17 +7,17 @@ namespace il_machine::stack
 {
     IlStack::IlStack()
     {
-        _value_stack = std::vector<il_runtime::values::IlValueContainer>();
+        _value_stack = std::vector<il_machine::values::IlValueContainer>();
     }
 
-    void IlStack::push(il_runtime::values::IlValueContainer val)
+    void IlStack::push(il_machine::values::IlValueContainer val)
     {
         _value_stack.push_back(val);
     }
 
-    il_runtime::values::IlValueContainer IlStack::pop()
+    il_machine::values::IlValueContainer IlStack::pop()
     {
-        il_runtime::values::IlValueContainer last_item = _value_stack.back();
+        il_machine::values::IlValueContainer last_item = _value_stack.back();
 
         _value_stack.pop_back();
 
