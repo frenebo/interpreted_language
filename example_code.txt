@@ -1,12 +1,1 @@
-a = 1;
-var b = 1;
-
-if (a + b)
-{
-    asdfasdf + 234234234;
-}
-
-// asdfa as dfas dfas fasd fasdffff//
-adfs;
-asdf = asdf + 2;
-//asdf
+var b = 1 + 2;
