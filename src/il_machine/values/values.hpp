@@ -3,7 +3,7 @@
 
 #include <variant>
 
-namespace il_runtime::values
+namespace il_machine::values
 {
     class IlNumberValue
     {

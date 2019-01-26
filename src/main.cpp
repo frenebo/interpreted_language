@@ -4,6 +4,8 @@
 #include <fstream>
 
 #include "compiler/compiler.hpp"
+#include "il_machine/il_machine.hpp"
+#include "intermediate_lang/instructions/instructions.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -24,8 +26,10 @@ int main(int argc, char *argv[])
         input_text.reserve(input_file.tellg());
         input_file.seekg(0, std::ios::beg);
 
-        input_text.assign((std::istreambuf_iterator<char>(input_file)),
-                    std::istreambuf_iterator<char>());
+        input_text.assign(
+            std::istreambuf_iterator<char>(input_file),
+            std::istreambuf_iterator<char>()
+        );
     }
     else
     {
@@ -33,4 +37,14 @@ int main(int argc, char *argv[])
     }
 
     compiler::Compiler().compile_text(input_text);
+
+    std::vector<intermediate_lang::instructions::InstructionContainer> instructions;
+
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstNumberInstruction(10)
+    );
+
+    il_runtime::IlRuntime::run_bytecode(
+        instructions
+    );
 }

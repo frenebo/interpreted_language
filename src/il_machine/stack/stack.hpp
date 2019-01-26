@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "../values/il_values.hpp"
+#include "../values/values.hpp"
 
-namespace il_runtime::stack
+namespace il_machine::stack
 {
     class IlStack
     {

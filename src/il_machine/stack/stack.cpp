@@ -1,9 +1,9 @@
 #include <vector>
 
-#include "../values/il_values.hpp"
-#include "il_stack.hpp"
+#include "../values/values.hpp"
+#include "stack.hpp"
 
-namespace il_runtime::stack
+namespace il_machine::stack
 {
     IlStack::IlStack()
     {
