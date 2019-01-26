@@ -1,6 +1,7 @@
 #ifndef IL_INSTRUCTIONS_H
 #define IL_INSTRUCTIONS_H
 
+#include <string>
 #include <variant>
 
 namespace intermediate_lang::instructions
@@ -19,6 +20,14 @@ namespace intermediate_lang::instructions
         double get_value() const;
     };
 
+    class LoadConstStringInstruction
+    {
+        std::string _contained_string;
+    public:
+        LoadConstStringInstruction(std::string contained_num);
+        std::string get_value() const;
+    };
+
     class LogValueInstruction
     {
     public:
@@ -29,6 +38,7 @@ namespace intermediate_lang::instructions
     {
         std::variant<
             LoadConstNumberInstruction,
+            LoadConstStringInstruction,
             AddNumbersInstruction,
             LogValueInstruction
         > _contained_instruction;
@@ -36,16 +46,20 @@ namespace intermediate_lang::instructions
         InstructionContainer(
             std::variant<
                 LoadConstNumberInstruction,
+                LoadConstStringInstruction,
                 AddNumbersInstruction,
                 LogValueInstruction
             > contained_instruction
         );
+
         InstructionContainer(LoadConstNumberInstruction contained_instruction);
+        InstructionContainer(LoadConstStringInstruction contained_instruction);
         InstructionContainer(AddNumbersInstruction contained_instruction);
         InstructionContainer(LogValueInstruction contained_instruction);
 
         const std::variant<
             LoadConstNumberInstruction,
+            LoadConstStringInstruction,
             AddNumbersInstruction,
             LogValueInstruction
         > & contained_instruction() const;

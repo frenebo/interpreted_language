@@ -66,6 +66,14 @@ int main(int argc, char *argv[])
         intermediate_lang::instructions::LogValueInstruction()
     );
 
+    instructions.push_back(
+        intermediate_lang::instructions::LoadConstStringInstruction("Hello, World!")
+    );
+
+    instructions.push_back(
+        intermediate_lang::instructions::LogValueInstruction()
+    );
+
     try
     {
         std::clock_t machine_clock_start = std::clock();
