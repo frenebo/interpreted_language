@@ -7,12 +7,12 @@
 
 namespace il_machine::values
 {
-    class IlNumberValue
+    class IlIntValue
     {
-        double _contained_num;
+        int _contained_num;
     public:
-        IlNumberValue(double contained_num);
-        double contained_num() const;
+        IlIntValue(int contained_num);
+        int contained_num() const;
     };
 
     class IlStringValue
@@ -26,13 +26,13 @@ namespace il_machine::values
     class IlValueContainer
     {
     private:
-        std::variant<IlNumberValue, IlStringValue> _contained_value;
+        std::variant<IlIntValue, IlStringValue> _contained_value;
     public:
-        IlValueContainer(std::variant<IlNumberValue, IlStringValue> contained_value);
-        IlValueContainer(IlNumberValue contained_value);
+        IlValueContainer(std::variant<IlIntValue, IlStringValue> contained_value);
+        IlValueContainer(IlIntValue contained_value);
         IlValueContainer(IlStringValue contained_value);
 
-        const std::variant<IlNumberValue, IlStringValue> & contained_value() const;
+        const std::variant<IlIntValue, IlStringValue> & contained_value() const;
     };
 }
 

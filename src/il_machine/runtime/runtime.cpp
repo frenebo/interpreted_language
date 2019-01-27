@@ -24,13 +24,13 @@ namespace il_machine::runtime
     {
         for (auto instruction_cont : _instruction_memory.instruction_containers())
         {
-            if (std::holds_alternative<intermediate_lang::instructions::AddNumbersInstruction>(instruction_cont.contained_instruction()))
+            if (std::holds_alternative<intermediate_lang::instructions::IntAddInstruction>(instruction_cont.contained_instruction()))
             {
-                execute_add_numbers();
+                execute_add_ints();
             }
-            else if (std::holds_alternative<intermediate_lang::instructions::SubtractNumbersInstruction>(instruction_cont.contained_instruction()))
+            else if (std::holds_alternative<intermediate_lang::instructions::IntSubtractInstruction>(instruction_cont.contained_instruction()))
             {
-                execute_subtract_numbers();
+                execute_subtract_ints();
             }
             else if (std::holds_alternative<intermediate_lang::instructions::LoadConstNumberInstruction>(instruction_cont.contained_instruction()))
             {
@@ -55,9 +55,9 @@ namespace il_machine::runtime
     {
         auto stack_val = _stack.pop();
 
-        if (std::holds_alternative<il_machine::values::IlNumberValue>(stack_val.contained_value()))
+        if (std::holds_alternative<il_machine::values::IlIntValue>(stack_val.contained_value()))
         {
-            double contained_num = std::get<il_machine::values::IlNumberValue>(stack_val.contained_value()).contained_num();
+            double contained_num = std::get<il_machine::values::IlIntValue>(stack_val.contained_value()).contained_num();
 
             std::cout << "LOG: " << contained_num << "\n";
         }
@@ -85,25 +85,25 @@ namespace il_machine::runtime
     {
         // double num_val = instruction.get_value();
 
-        il_machine::values::IlNumberValue num_val = il_machine::values::IlNumberValue(instruction.get_value());
+        il_machine::values::IlIntValue num_val = il_machine::values::IlIntValue(instruction.get_value());
         il_machine::values::IlValueContainer val_container = il_machine::values::IlValueContainer(num_val);
 
         _stack.push(val_container);
     }
 
-    void IlRuntime::execute_subtract_numbers()
+    void IlRuntime::execute_subtract_ints()
     {
         auto rhs = _stack.pop();
         auto lhs = _stack.pop();
 
         if (
-            std::holds_alternative<il_machine::values::IlNumberValue>(rhs.contained_value()) &&
-            std::holds_alternative<il_machine::values::IlNumberValue>(lhs.contained_value()))
+            std::holds_alternative<il_machine::values::IlIntValue>(rhs.contained_value()) &&
+            std::holds_alternative<il_machine::values::IlIntValue>(lhs.contained_value()))
         {
-            double rhs_num = std::get<il_machine::values::IlNumberValue>(rhs.contained_value()).contained_num();
-            double lhs_num = std::get<il_machine::values::IlNumberValue>(lhs.contained_value()).contained_num();
+            double rhs_num = std::get<il_machine::values::IlIntValue>(rhs.contained_value()).contained_num();
+            double lhs_num = std::get<il_machine::values::IlIntValue>(lhs.contained_value()).contained_num();
 
-            il_machine::values::IlNumberValue new_val = il_machine::values::IlNumberValue(lhs_num - rhs_num);
+            il_machine::values::IlIntValue new_val = il_machine::values::IlIntValue(lhs_num - rhs_num);
 
             il_machine::values::IlValueContainer val_container = il_machine::values::IlValueContainer(new_val);
             _stack.push(val_container);
@@ -115,19 +115,19 @@ namespace il_machine::runtime
         }
     }
 
-    void IlRuntime::execute_add_numbers()
+    void IlRuntime::execute_add_ints()
     {
         auto rhs = _stack.pop();
         auto lhs = _stack.pop();
 
         if (
-            std::holds_alternative<il_machine::values::IlNumberValue>(rhs.contained_value()) &&
-            std::holds_alternative<il_machine::values::IlNumberValue>(lhs.contained_value()))
+            std::holds_alternative<il_machine::values::IlIntValue>(rhs.contained_value()) &&
+            std::holds_alternative<il_machine::values::IlIntValue>(lhs.contained_value()))
         {
-            double rhs_num = std::get<il_machine::values::IlNumberValue>(rhs.contained_value()).contained_num();
-            double lhs_num = std::get<il_machine::values::IlNumberValue>(lhs.contained_value()).contained_num();
+            double rhs_num = std::get<il_machine::values::IlIntValue>(rhs.contained_value()).contained_num();
+            double lhs_num = std::get<il_machine::values::IlIntValue>(lhs.contained_value()).contained_num();
 
-            il_machine::values::IlNumberValue new_val = il_machine::values::IlNumberValue(lhs_num + rhs_num);
+            il_machine::values::IlIntValue new_val = il_machine::values::IlIntValue(lhs_num + rhs_num);
 
             il_machine::values::IlValueContainer val_container = il_machine::values::IlValueContainer(new_val);
             _stack.push(val_container);

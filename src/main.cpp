@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     );
 
     instructions.push_back(
-        intermediate_lang::instructions::SubtractNumbersInstruction()
+        intermediate_lang::instructions::IntSubtractInstruction()
     );
 
     instructions.push_back(
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     );
 
     instructions.push_back(
-        intermediate_lang::instructions::AddNumbersInstruction()
+        intermediate_lang::instructions::IntAddInstruction()
     );
 
     instructions.push_back(

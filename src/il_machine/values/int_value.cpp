@@ -2,12 +2,12 @@
 
 namespace il_machine::values
 {
-    IlNumberValue::IlNumberValue(double contained_num)
+    IlIntValue::IlIntValue(int contained_num)
     : _contained_num(contained_num)
     {
     }
 
-    double IlNumberValue::contained_num() const
+    int IlIntValue::contained_num() const
     {
         return _contained_num;
     }

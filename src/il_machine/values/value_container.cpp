@@ -4,12 +4,12 @@
 
 namespace il_machine::values
 {
-    IlValueContainer::IlValueContainer(std::variant<IlNumberValue, IlStringValue> contained_value)
+    IlValueContainer::IlValueContainer(std::variant<IlIntValue, IlStringValue> contained_value)
     : _contained_value(contained_value)
     {
     }
 
-    IlValueContainer::IlValueContainer(IlNumberValue contained_value)
+    IlValueContainer::IlValueContainer(IlIntValue contained_value)
     : _contained_value(contained_value)
     {
     }
@@ -19,7 +19,7 @@ namespace il_machine::values
     {
     }
 
-    const std::variant<IlNumberValue, IlStringValue> & IlValueContainer::contained_value() const
+    const std::variant<IlIntValue, IlStringValue> & IlValueContainer::contained_value() const
     {
         return _contained_value;
     }

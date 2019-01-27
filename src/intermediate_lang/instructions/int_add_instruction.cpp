@@ -2,7 +2,7 @@
 
 namespace intermediate_lang::instructions
 {
-    SubtractNumbersInstruction::SubtractNumbersInstruction()
+    IntAddInstruction::IntAddInstruction()
     {
     }
 }

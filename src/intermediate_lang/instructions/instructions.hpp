@@ -6,16 +6,16 @@
 
 namespace intermediate_lang::instructions
 {
-    class AddNumbersInstruction
+    class IntAddInstruction
     {
     public:
-        AddNumbersInstruction();
+        IntAddInstruction();
     };
 
-    class SubtractNumbersInstruction
+    class IntSubtractInstruction
     {
     public:
-        SubtractNumbersInstruction();
+        IntSubtractInstruction();
     };
 
     class LoadConstNumberInstruction
@@ -45,8 +45,8 @@ namespace intermediate_lang::instructions
         std::variant<
             LoadConstNumberInstruction,
             LoadConstStringInstruction,
-            AddNumbersInstruction,
-            SubtractNumbersInstruction,
+            IntAddInstruction,
+            IntSubtractInstruction,
             LogValueInstruction
         > _contained_instruction;
     public:
@@ -54,23 +54,23 @@ namespace intermediate_lang::instructions
             std::variant<
                 LoadConstNumberInstruction,
                 LoadConstStringInstruction,
-                AddNumbersInstruction,
-                SubtractNumbersInstruction,
+                IntAddInstruction,
+                IntSubtractInstruction,
                 LogValueInstruction
             > contained_instruction
         );
 
         InstructionContainer(LoadConstNumberInstruction contained_instruction);
         InstructionContainer(LoadConstStringInstruction contained_instruction);
-        InstructionContainer(AddNumbersInstruction contained_instruction);
-        InstructionContainer(SubtractNumbersInstruction contained_instruction);
+        InstructionContainer(IntAddInstruction contained_instruction);
+        InstructionContainer(IntSubtractInstruction contained_instruction);
         InstructionContainer(LogValueInstruction contained_instruction);
 
         const std::variant<
             LoadConstNumberInstruction,
             LoadConstStringInstruction,
-            AddNumbersInstruction,
-            SubtractNumbersInstruction,
+            IntAddInstruction,
+            IntSubtractInstruction,
             LogValueInstruction
         > & contained_instruction() const;
     };

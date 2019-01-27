@@ -14,8 +14,8 @@ namespace il_machine::runtime
         il_machine::stack::IlStack _stack;
         il_machine::instruction_memory::InstructionMemory _instruction_memory;
 
-        void execute_add_numbers();
-        void execute_subtract_numbers();
+        void execute_add_ints();
+        void execute_subtract_ints();
         void execute_log_value();
         void execute_load_const_string(intermediate_lang::instructions::LoadConstStringInstruction instruction);
         void execute_load_const_num(intermediate_lang::instructions::LoadConstNumberInstruction instruction);
