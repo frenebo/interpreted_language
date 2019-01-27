@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
         std::cout << "Program takes one argument: input file name\n";
         return 1;
     }
-    // std::cout << argc << "\n";
+
     std::string file_name = std::string(argv[1]);
 
     std::ifstream input_file = std::ifstream(file_name);
@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
     );
 
     instructions.push_back(
-        intermediate_lang::instructions::LoadConstNumberInstruction(20)
+        intermediate_lang::instructions::LoadConstNumberInstruction(200)
     );
 
     instructions.push_back(
-        intermediate_lang::instructions::AddNumbersInstruction()
+        intermediate_lang::instructions::SubtractNumbersInstruction()
     );
 
     instructions.push_back(

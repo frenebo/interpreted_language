@@ -7,6 +7,7 @@ namespace intermediate_lang::instructions
             LoadConstNumberInstruction,
             LoadConstStringInstruction,
             AddNumbersInstruction,
+            SubtractNumbersInstruction,
             LogValueInstruction
         > contained_instruction
     )
@@ -29,6 +30,11 @@ namespace intermediate_lang::instructions
     {
     }
 
+    InstructionContainer::InstructionContainer(SubtractNumbersInstruction contained_instruction)
+    : _contained_instruction(contained_instruction)
+    {
+    }
+
     InstructionContainer::InstructionContainer(LogValueInstruction contained_instruction)
     : _contained_instruction(contained_instruction)
     {
@@ -38,6 +44,7 @@ namespace intermediate_lang::instructions
         LoadConstNumberInstruction,
         LoadConstStringInstruction,
         AddNumbersInstruction,
+        SubtractNumbersInstruction,
         LogValueInstruction
     > & InstructionContainer::contained_instruction() const
     {

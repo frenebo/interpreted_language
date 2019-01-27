@@ -12,6 +12,12 @@ namespace intermediate_lang::instructions
         AddNumbersInstruction();
     };
 
+    class SubtractNumbersInstruction
+    {
+    public:
+        SubtractNumbersInstruction();
+    };
+
     class LoadConstNumberInstruction
     {
         double _contained_num;
@@ -40,6 +46,7 @@ namespace intermediate_lang::instructions
             LoadConstNumberInstruction,
             LoadConstStringInstruction,
             AddNumbersInstruction,
+            SubtractNumbersInstruction,
             LogValueInstruction
         > _contained_instruction;
     public:
@@ -48,6 +55,7 @@ namespace intermediate_lang::instructions
                 LoadConstNumberInstruction,
                 LoadConstStringInstruction,
                 AddNumbersInstruction,
+                SubtractNumbersInstruction,
                 LogValueInstruction
             > contained_instruction
         );
@@ -55,12 +63,14 @@ namespace intermediate_lang::instructions
         InstructionContainer(LoadConstNumberInstruction contained_instruction);
         InstructionContainer(LoadConstStringInstruction contained_instruction);
         InstructionContainer(AddNumbersInstruction contained_instruction);
+        InstructionContainer(SubtractNumbersInstruction contained_instruction);
         InstructionContainer(LogValueInstruction contained_instruction);
 
         const std::variant<
             LoadConstNumberInstruction,
             LoadConstStringInstruction,
             AddNumbersInstruction,
+            SubtractNumbersInstruction,
             LogValueInstruction
         > & contained_instruction() const;
     };
