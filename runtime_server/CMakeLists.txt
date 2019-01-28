@@ -14,6 +14,6 @@ add_executable(runtime_server ${proj_SRC})
 SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Wswitch-enum -lboost_system-mt")
 add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 
-find_package(Boost REQUIRED COMPONENTS system filesystem )
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(runtime_server ${Boost_LIBRARIES})
