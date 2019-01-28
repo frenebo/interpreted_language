@@ -1,1 +1,1 @@
-from .zementis_interface import zementis_interface
+from .zementis_interface import ZementisInterface
