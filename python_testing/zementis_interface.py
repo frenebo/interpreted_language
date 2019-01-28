@@ -1,5 +1,7 @@
 import contextlib
 import io
+import sys
+import json
 
 class ZementisDataTypeConfigError(Exception):
     """Exception for invalid data type configuration"""
@@ -16,7 +18,7 @@ class EntryFuncWrapper():
         self.output_type = output_type
 
 class ZementisInterface:
-    data_types = ["json"]
+    data_types = ["json", "string"]
     entry_func_wrapper = None
 
     # generates a decorator and registers the function
@@ -32,7 +34,7 @@ class ZementisInterface:
         return decorator
 
     @staticmethod
-    def test_run():
+    def set_up_interface():
         if ZementisInterface.entry_func_wrapper == None:
             raise Exception("No entry function defined")
 
@@ -42,4 +44,33 @@ class ZementisInterface:
 
         fun_stdout_redirect = io.StringIO()
 
-        entry_fun()
+        for line in sys.stdin:
+            input_val = None
+
+            # process input
+            if entry_input_type == "json":
+                input_val = json.loads(line)
+            elif entry_input_type == "string":
+                input_val = line
+            else:
+                raise Exception("Unimplemented input type " + entry_input_type)
+
+            # run function
+            raw_result = None
+            with contextlib.redirect_stdout(fun_stdout_redirect):
+                raw_result = entry_fun(input_val)
+
+            # process output
+            result = None
+            if entry_output_type == "json":
+                result = json.dumps(raw_result)
+            elif entry_input_type == "string":
+                input_val = line
+            else:
+                raise Exception("Unimplented output type " + entry_output_type)
+
+            sys.stdout.write(result + "\n")
+            sys.stdout.flush()
+
+        # for ch in fun_stdout_redirect.getvalue()
+        #     print(ch)
