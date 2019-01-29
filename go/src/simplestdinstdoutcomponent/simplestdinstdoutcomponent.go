@@ -2,6 +2,7 @@ package simplestdinstdoutcomponent
 
 import (
 	"dataformats"
+	"os"
 	"os/exec"
 	"strings"
 	"workspacefsutils"
@@ -38,7 +39,7 @@ type SimpleStdinStdoutComponent struct {
 func (component *SimpleStdinStdoutComponent) NewDataProcessHandle(
 	inputPipe *workspacepipe.WorkspacePipe,
 	outputPipe *workspacepipe.WorkspacePipe,
-) *SimpleStdinStdoutDataProcHandle {
+) (*SimpleStdinStdoutDataProcHandle, error) {
 	// string.j
 	cmdLine := component.cmdString + " " + strings.Join(component.cmdArgs, " ")
 	inputPipePath := workspacefsutils.PipePath(inputPipe.PipeName())
@@ -49,13 +50,15 @@ func (component *SimpleStdinStdoutComponent) NewDataProcessHandle(
 		"("+cmdLine+"<"+inputPipePath+")>"+outputPipePath,
 	)
 
-	proc.Run()
+	proc.Stdout = os.Stdout
+
+	err := proc.Start()
 
 	return &SimpleStdinStdoutDataProcHandle{
 		inputFormat:  component.inputFormat,
 		outputFormat: component.outputFormat,
 		proc:         proc,
-	}
+	}, err
 }
 
 // InputFormat returns the input type of the component

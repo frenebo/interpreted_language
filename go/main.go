@@ -24,11 +24,11 @@ func main() {
 	)
 	fmt.Println(err)
 
-	// outputPipe, err := workspacepipe.NewWorkspacePipe(
-	// 	dataformats.JSON,
-	// 	"c",
-	// )
-	// fmt.Println(err)
+	outputPipe, err := workspacepipe.NewWorkspacePipe(
+		dataformats.JSON,
+		"c",
+	)
+	fmt.Println(err)
 
 	component1 := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
 		dataformats.JSON,
@@ -37,22 +37,24 @@ func main() {
 		[]string{"prog.py"},
 	)
 
-	// component2 := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
-	// 	dataformats.JSON,
-	// 	dataformats.JSON,
-	// 	"python3",
-	// 	[]string{"prog.py"},
-	// )
+	component2 := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
+		dataformats.JSON,
+		dataformats.JSON,
+		"python3",
+		[]string{"prog.py"},
+	)
 
-	component1.NewDataProcessHandle(
+	_, err = component1.NewDataProcessHandle(
 		inputPipe,
 		intermediatePipe,
 	)
+	fmt.Println(err)
 
-	// component2.NewDataProcessHandle(
-	// 	intermediatePipe,
-	// 	outputPipe,
-	// )
+	_, err = component2.NewDataProcessHandle(
+		intermediatePipe,
+		outputPipe,
+	)
+	fmt.Println(err)
 
 	for {
 		time.Sleep(time.Second)

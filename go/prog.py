@@ -1,4 +1,5 @@
+import sys
 
 input_str = sys.stdin.read()
 
-print("aaaaaaaaaaaaaaaaaaa\n\nasdfasdf")
+sys.stdout.write(input_str)
