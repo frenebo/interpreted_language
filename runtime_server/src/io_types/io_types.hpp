@@ -3,7 +3,7 @@
 
 namespace io_types
 {
-    enum IoType {JSON};
+    enum IoType {TRIGGER, JSON, TEXT};
 }
 
 #endif
