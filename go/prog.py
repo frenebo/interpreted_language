@@ -1,7 +1,6 @@
 import sys
 
-print("aaaaaaaaaaaaaaaaaaaaaaaaaa")
-print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+# print("aaaaaaaaaaaaaaaaaaaaaaaaa")
+input_str = sys.stdin.read()
 
-for line in sys.stdin:
-    print(line + line)
+print(input_str)

@@ -1,17 +1,22 @@
 package main
 
-import "dataprocesswrapper"
-import "dataformats"
+import (
+	"dataformats"
+	"simplestdinstdoutcomponent"
+	"time"
+)
 
 func main() {
-	// processutils.SpawnProcess()
-	dataprocesswrapper.NewDataProcessWrapper(
+	comp := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
 		dataformats.JSON,
 		dataformats.JSON,
+		"python3",
+		[]string{"prog.py"},
 	)
 
-	// workspacefsutils.CleanUpAndInit()
+	comp.NewDataProcessHandle()
 
-	// work := dataworkspace.NewDataWorkspace()
-	// work.AddProcess("a", proc)
+	for {
+		time.Sleep(time.Second)
+	}
 }
