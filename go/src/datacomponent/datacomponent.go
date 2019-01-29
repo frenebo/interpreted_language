@@ -12,5 +12,5 @@ type DataComponent interface {
 	NewDataProcessHandle(
 		inputPipe workspacepipe.WorkspacePipe,
 		outputPipe workspacepipe.WorkspacePipe,
-	) *dataprocesshandle.DataProcessHandle
+	) (*dataprocesshandle.DataProcessHandle, error)
 }
