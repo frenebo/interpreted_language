@@ -2,4 +2,4 @@ import sys
 
 input_str = sys.stdin.read()
 
-sys.stdout.write(input_str)
+sys.stdout.write(input_str + ":" + input_str)
