@@ -46,6 +46,7 @@ func initRequiredDirsIfNotPresent() {
 
 func cleanPipeDir() {
 	deleteFileOrDir(namedPipeDir())
+	createDirAll(namedPipeDir())
 }
 
 // CleanUpAndInit cleans up any old files and sets up new folders that may be missing
@@ -55,6 +56,11 @@ func CleanUpAndInit() {
 }
 
 // AddNamedPipe creates a named pipe with the given path
-func AddNamedPipe(pipeName string) {
-	syscall.Mknod(namedPipeDir()+pipeName, syscall.S_IFIFO|0666, 0)
+func AddNamedPipe(pipeName string) error {
+	return syscall.Mknod(PipePath(pipeName), syscall.S_IFIFO|0666, 0)
+}
+
+// PipePath gives the path of a pipe with the given name
+func PipePath(pipeName string) string {
+	return namedPipeDir() + pipeName
 }

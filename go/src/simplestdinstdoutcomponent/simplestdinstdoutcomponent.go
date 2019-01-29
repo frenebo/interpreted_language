@@ -3,6 +3,9 @@ package simplestdinstdoutcomponent
 import (
 	"dataformats"
 	"os/exec"
+	"strings"
+	"workspacefsutils"
+	"workspacepipe"
 )
 
 // SimpleStdinStdoutDataProcHandle is a handle for a simple stdin-stdout file process
@@ -33,12 +36,20 @@ type SimpleStdinStdoutComponent struct {
 
 // NewDataProcessHandle creates a process handle
 func (component *SimpleStdinStdoutComponent) NewDataProcessHandle(
-	inputPipe workspacepipe.WorkspacePipe,
-	outputPipe workspacepipe.WorkspacePipe
+	inputPipe *workspacepipe.WorkspacePipe,
+	outputPipe *workspacepipe.WorkspacePipe,
 ) *SimpleStdinStdoutDataProcHandle {
-	// "(cat < inputpipe) > outputpipe"
-	// inputPipe.
-	// proc := exec.Command(component.cmdString, component.cmdArgs...)
+	// string.j
+	cmdLine := component.cmdString + " " + strings.Join(component.cmdArgs, " ")
+	inputPipePath := workspacefsutils.PipePath(inputPipe.PipeName())
+	outputPipePath := workspacefsutils.PipePath(outputPipe.PipeName())
+	proc := exec.Command(
+		"sh",
+		"-c",
+		"("+cmdLine+"<"+inputPipePath+")>"+outputPipePath,
+	)
+
+	proc.Run()
 
 	return &SimpleStdinStdoutDataProcHandle{
 		inputFormat:  component.inputFormat,
