@@ -1,18 +1,18 @@
 package main
 
-import "workspacemanager"
-
+import "workspacefsutils"
 import "dataformats"
 import "dataworkspace"
 import "dataprocesswrapper"
 
 func main() {
-	workspacemanager.Example()
 
 	proc := dataprocesswrapper.NewDataProcessWrapper(
 		dataformats.JSON,
 		dataformats.JSON,
 	)
+
+	workspacefsutils.CleanUpAndInit()
 
 	work := dataworkspace.NewDataWorkspace()
 	work.AddProcess("a", proc)

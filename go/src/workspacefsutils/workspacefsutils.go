@@ -16,7 +16,7 @@ func isFilePath(path string) bool {
 }
 
 func deleteFileOrDir(path string) {
-	os.Remove(path)
+	os.RemoveAll(path)
 }
 
 func createDirAll(dirPath string) {
@@ -44,8 +44,17 @@ func initRequiredDirsIfNotPresent() {
 	}
 }
 
+func cleanPipeDir() {
+	deleteFileOrDir(namedPipeDir())
+}
+
+// CleanUpAndInit cleans up any old files and sets up new folders that may be missing
+func CleanUpAndInit() {
+	initRequiredDirsIfNotPresent()
+	cleanPipeDir()
+}
+
 // AddNamedPipe creates a named pipe with the given path
 func AddNamedPipe(pipeName string) {
-	initRequiredDirsIfNotPresent()
 	syscall.Mknod(namedPipeDir()+pipeName, syscall.S_IFIFO|0666, 0)
 }
