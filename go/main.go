@@ -2,61 +2,33 @@ package main
 
 import (
 	"dataformats"
-	"fmt"
+	"dataworkspace"
 	"simplestdinstdoutcomponent"
-	"time"
 	"workspacefsutils"
-	"workspacepipe"
 )
 
 func main() {
 	workspacefsutils.CleanUpAndInit()
 
-	inputPipe, err := workspacepipe.NewWorkspacePipe(
-		dataformats.JSON,
-		"a",
-	)
-	fmt.Println(err)
+	workspace := dataworkspace.NewDataWorkspace()
 
-	intermediatePipe, err := workspacepipe.NewWorkspacePipe(
-		dataformats.JSON,
-		"b",
-	)
-	fmt.Println(err)
-
-	outputPipe, err := workspacepipe.NewWorkspacePipe(
-		dataformats.JSON,
-		"c",
-	)
-	fmt.Println(err)
-
-	component1 := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
+	firstComponent := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
 		dataformats.JSON,
 		dataformats.JSON,
 		"python3",
-		[]string{"prog.py"},
+		[]string{"simple_stdin_stdout_repeater.py"},
 	)
-
-	component2 := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
+	secondComponent := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
 		dataformats.JSON,
 		dataformats.JSON,
 		"python3",
-		[]string{"prog.py"},
+		[]string{"simple_stdin_stdout_repeater.py"},
 	)
 
-	_, err = component1.NewDataProcessHandle(
-		inputPipe,
-		intermediatePipe,
-	)
-	fmt.Println(err)
+	workspace.AddComponent("1", firstComponent)
+	workspace.AddComponent("2", secondComponent)
 
-	_, err = component2.NewDataProcessHandle(
-		intermediatePipe,
-		outputPipe,
-	)
-	fmt.Println(err)
+	workspace.AddConnection("1", "2")
 
-	for {
-		time.Sleep(time.Second)
-	}
+	workspace.CreateWorkspaceInstance()
 }
