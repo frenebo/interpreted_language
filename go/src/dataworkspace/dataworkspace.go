@@ -179,13 +179,23 @@ func (workspace *DataWorkspace) AddOutput(key string, outputComponent *workspace
 	return nil
 }
 
-// AddComponent adds a component to the workspace
-func (workspace *DataWorkspace) AddComponent(key string, component *simplestdinstdoutcomponent.SimpleStdinStdoutComponent) error {
+// AddSimpleStdinStdoutComponent adds a simple stdin/stdout component to the workspace
+func (workspace *DataWorkspace) AddSimpleStdinStdoutComponent(key string, component *simplestdinstdoutcomponent.SimpleStdinStdoutComponent) error {
 	if workspace.hasComponentKey(key) {
 		return errors.New("Component with given name already exists")
 	}
 
 	workspace.simpleStdinStdoutComponents[key] = component
+	return nil
+}
+
+// AddSingletonLambdaComponent adds a singleton lambda component to the workspace
+func (workspace *DataWorkspace) AddSingletonLambdaComponent(key string, component *singletonlambdacomponent.SingletonLambdaComponent) error {
+	if workspace.hasComponentKey(key) {
+		return errors.New("Component with given name already exists")
+	}
+
+	workspace.singletonComponents[key] = component
 	return nil
 }
 
@@ -216,6 +226,7 @@ func (workspace *DataWorkspace) AddConnection(sourceKey string, targetKey string
 func NewDataWorkspace() *DataWorkspace {
 	return &DataWorkspace{
 		simpleStdinStdoutComponents: make(map[string]*simplestdinstdoutcomponent.SimpleStdinStdoutComponent),
+		singletonComponents:         make(map[string]*singletonlambdacomponent.SingletonLambdaComponent),
 		connections:                 []workspaceconnection.WorkspaceConnection{},
 		inputs:                      make(map[string]*workspaceio.WorkspaceInputComponent),
 		outputs:                     make(map[string]*workspaceio.WorkspaceOutputComponent),

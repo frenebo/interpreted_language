@@ -44,13 +44,15 @@ func (component *SimpleStdinStdoutComponent) NewDataProcessHandle(
 	cmdLine := component.cmdString + " " + strings.Join(component.cmdArgs, " ")
 	inputPipePath := workspacefsutils.PipePath(inputPipe.PipeName())
 	outputPipePath := workspacefsutils.PipePath(outputPipe.PipeName())
+
 	proc := exec.Command(
 		"sh",
 		"-c",
 		"("+cmdLine+"<"+inputPipePath+")>"+outputPipePath,
 	)
 
-	proc.Stdout = os.Stdout
+	// redirect process errors to the stderr for this process
+	proc.Stderr = os.Stderr
 
 	err := proc.Start()
 

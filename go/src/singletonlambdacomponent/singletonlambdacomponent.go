@@ -3,7 +3,9 @@ package singletonlambdacomponent
 import (
 	"dataformats"
 	"encoding/json"
+	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"workspacepipe"
 )
@@ -23,11 +25,12 @@ type SingletonTaskHandle struct {
 
 // NewSingletonLambdaComponent creates a new singleton lambda component, with a process and all
 func NewSingletonLambdaComponent(
-	cmdLine string,
+	cmdName string,
+	cmdArgs []string,
 	inputFormat dataformats.FormatType,
 	outputFormat dataformats.FormatType,
 ) (*SingletonLambdaComponent, error) {
-	proc := exec.Command(cmdLine)
+	proc := exec.Command(cmdName, cmdArgs...)
 
 	stdinPipe, err := proc.StdinPipe()
 	if err != nil {
@@ -35,6 +38,13 @@ func NewSingletonLambdaComponent(
 	}
 
 	stdoutPipe, err := proc.StdoutPipe()
+	if err != nil {
+		return nil, err
+	}
+
+	proc.Stderr = os.Stderr
+
+	err = proc.Start()
 	if err != nil {
 		return nil, err
 	}
@@ -58,15 +68,26 @@ func (component *SingletonLambdaComponent) CreateTaskHandle(
 	inputPipe *workspacepipe.WorkspacePipe,
 	outputPipe *workspacepipe.WorkspacePipe,
 ) (*SingletonTaskHandle, error) {
-	encoded, err := json.Marshal(taskInstructionObject)
+	encoded, err := json.Marshal(taskInstructionObject{
+		InputPipeName:  inputPipe.PipeName(),
+		OutputPipeName: outputPipe.PipeName(),
+	})
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = component.stdinPipe.Write(encoded)
-	if err != nil {
-		return nil, err
-	}
+	fmt.Println("Writing string")
+	io.WriteString(component.stdinPipe, string(encoded))
+	fmt.Println("Wrote string")
+
+	// _, err = component.stdinPipe.Write(encoded)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// _, err = component.stdinPipe.Write([]byte("\n"))
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &SingletonTaskHandle{}, nil
 }

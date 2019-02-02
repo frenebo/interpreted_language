@@ -5,6 +5,7 @@ import (
 	"dataworkspace"
 	"fmt"
 	"simplestdinstdoutcomponent"
+	"singletonlambdacomponent"
 	"time"
 	"workspacefsutils"
 	"workspaceio"
@@ -29,7 +30,18 @@ func main() {
 		[]string{"simple_stdin_stdout_repeater.py"},
 	)
 
-	err := workspace.AddInput("in", workspaceio.NewWorkspaceInputComponent(dataformats.JSON))
+	thirdComponent, err := singletonlambdacomponent.NewSingletonLambdaComponent(
+		"python3",
+		[]string{"singleton_json_multiplier.py"},
+		dataformats.JSON,
+		dataformats.JSON,
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = workspace.AddInput("in", workspaceio.NewWorkspaceInputComponent(dataformats.JSON))
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -40,12 +52,17 @@ func main() {
 		return
 	}
 
-	err = workspace.AddComponent("1", firstComponent)
+	err = workspace.AddSimpleStdinStdoutComponent("1", firstComponent)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = workspace.AddComponent("2", secondComponent)
+	err = workspace.AddSimpleStdinStdoutComponent("2", secondComponent)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = workspace.AddSingletonLambdaComponent("3", thirdComponent)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -61,7 +78,12 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	err = workspace.AddConnection("2", "out")
+	err = workspace.AddConnection("2", "3")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = workspace.AddConnection("3", "out")
 	if err != nil {
 		fmt.Println(err)
 		return
