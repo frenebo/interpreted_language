@@ -4,6 +4,7 @@ import (
 	"dataformats"
 	"errors"
 	"simplestdinstdoutcomponent"
+	"singletonlambdacomponent"
 	"strconv"
 	"workspaceconnection"
 	"workspaceio"
@@ -13,6 +14,7 @@ import (
 // DataWorkspace is holds the information about a data workspace
 type DataWorkspace struct {
 	simpleStdinStdoutComponents map[string]*simplestdinstdoutcomponent.SimpleStdinStdoutComponent
+	singletonComponents         map[string]*singletonlambdacomponent.SingletonLambdaComponent
 	connections                 []workspaceconnection.WorkspaceConnection
 	inputs                      map[string]*workspaceio.WorkspaceInputComponent
 	outputs                     map[string]*workspaceio.WorkspaceOutputComponent
@@ -20,21 +22,25 @@ type DataWorkspace struct {
 
 func (workspace *DataWorkspace) hasComponentKey(key string) bool {
 	_, simpleStdinStdoutCompExists := workspace.simpleStdinStdoutComponents[key]
+	_, singletonLambdaComponentExists := workspace.singletonComponents[key]
 	_, inputCompExists := workspace.inputs[key]
 	_, outputCompExists := workspace.outputs[key]
 
-	return simpleStdinStdoutCompExists || inputCompExists || outputCompExists
+	return simpleStdinStdoutCompExists || singletonLambdaComponentExists || inputCompExists || outputCompExists
 }
 
 func (workspace *DataWorkspace) getComponentOutputType(key string) (dataformats.FormatType, error) {
 	simpleStdinStdoutComp, hasVal := workspace.simpleStdinStdoutComponents[key]
-
 	if hasVal {
 		return simpleStdinStdoutComp.OutputFormat(), nil
 	}
 
-	inputComp, hasVal := workspace.inputs[key]
+	singletonLambdaComp, hasVal := workspace.singletonComponents[key]
+	if hasVal {
+		return singletonLambdaComp.OutputFormat(), nil
+	}
 
+	inputComp, hasVal := workspace.inputs[key]
 	if hasVal {
 		return inputComp.GetDataFormat(), nil
 	}
@@ -49,6 +55,11 @@ func (workspace *DataWorkspace) getComponentInputType(key string) (dataformats.F
 		return simpleStdinStdoutComp.InputFormat(), nil
 	}
 
+	singletonLambdaComp, hasVal := workspace.singletonComponents[key]
+	if hasVal {
+		return singletonLambdaComp.InputFormat(), nil
+	}
+
 	outputComp, hasVal := workspace.outputs[key]
 
 	if hasVal {
@@ -61,6 +72,7 @@ func (workspace *DataWorkspace) getComponentInputType(key string) (dataformats.F
 // WorkspaceInstance represents an instance of a data workspace, ready for input, etc.
 type WorkspaceInstance struct {
 	simpleStdinStdoutDataProcessHandles map[string]*simplestdinstdoutcomponent.SimpleStdinStdoutDataProcHandle
+	singletonLambdaTasks                map[string]*singletonlambdacomponent.SingletonTaskHandle
 }
 
 // CreateWorkspaceInstance creates a WorkspaceInstance from the data workspace
@@ -83,7 +95,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 		pipesByInput[conn.GetInputComponentId()] = newPipe
 	}
 
-	// set up processes
+	// set up simple stdin stdout processes
 	simpleStdinStdoutDataProcessHandles := make(map[string]*simplestdinstdoutcomponent.SimpleStdinStdoutDataProcHandle)
 
 	for key, component := range workspace.simpleStdinStdoutComponents {
@@ -97,6 +109,22 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 		}
 
 		simpleStdinStdoutDataProcessHandles[key] = newProcHandle
+	}
+
+	// set up singleton lambda tasks
+	singletonLambdaTasks := make(map[string]*singletonlambdacomponent.SingletonTaskHandle)
+
+	for key, component := range workspace.singletonComponents {
+		taskHandle, err := component.CreateTaskHandle(
+			pipesByOutput[key],
+			pipesByInput[key],
+		)
+
+		if err != nil {
+			return nil, err
+		}
+
+		singletonLambdaTasks[key] = taskHandle
 	}
 
 	// set up inputs
@@ -129,6 +157,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 
 	return &WorkspaceInstance{
 		simpleStdinStdoutDataProcessHandles: simpleStdinStdoutDataProcessHandles,
+		singletonLambdaTasks:                singletonLambdaTasks,
 	}, nil
 }
 

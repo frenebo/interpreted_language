@@ -16,25 +16,25 @@ func main() {
 	workspace := dataworkspace.NewDataWorkspace()
 
 	firstComponent := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
-		dataformats.PngImage,
-		dataformats.PngImage,
+		dataformats.JSON,
+		dataformats.JSON,
 		"python3",
 		[]string{"simple_stdin_stdout_repeater.py"},
 	)
 
 	secondComponent := simplestdinstdoutcomponent.NewSimpleStdinStdoutComponent(
-		dataformats.PngImage,
-		dataformats.PngImage,
+		dataformats.JSON,
+		dataformats.JSON,
 		"python3",
 		[]string{"simple_stdin_stdout_repeater.py"},
 	)
 
-	err := workspace.AddInput("in", workspaceio.NewWorkspaceInputComponent(dataformats.PngImage))
+	err := workspace.AddInput("in", workspaceio.NewWorkspaceInputComponent(dataformats.JSON))
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	err = workspace.AddOutput("out", workspaceio.NewWorkspaceOutputComponent(dataformats.PngImage))
+	err = workspace.AddOutput("out", workspaceio.NewWorkspaceOutputComponent(dataformats.JSON))
 	if err != nil {
 		fmt.Println(err)
 		return
