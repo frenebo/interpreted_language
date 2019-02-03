@@ -1,6 +1,6 @@
 import sys
 
-# sys.stderr.write("aaaa singleton\n")
+sys.stderr.write("aaaa singleton\n")
 
 while True:
     result = sys.stdin.read(1)

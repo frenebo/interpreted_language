@@ -1,0 +1,1 @@
+from .connectiondescription import WorkspaceConnectionDescription

@@ -3,6 +3,7 @@ package dataworkspace
 import (
 	"dataformats"
 	"errors"
+	"fmt"
 	"simplestdinstdoutcomponent"
 	"singletonlambdacomponent"
 	"strconv"
@@ -94,6 +95,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 		pipesByOutput[conn.GetOutputComponentId()] = newPipe
 		pipesByInput[conn.GetInputComponentId()] = newPipe
 	}
+	fmt.Println("Pipes set up")
 
 	// set up simple stdin stdout processes
 	simpleStdinStdoutDataProcessHandles := make(map[string]*simplestdinstdoutcomponent.SimpleStdinStdoutDataProcHandle)
@@ -110,6 +112,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 
 		simpleStdinStdoutDataProcessHandles[key] = newProcHandle
 	}
+	fmt.Println("Stdin/stdout processes set up")
 
 	// set up singleton lambda tasks
 	singletonLambdaTasks := make(map[string]*singletonlambdacomponent.SingletonTaskHandle)
@@ -126,6 +129,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 
 		singletonLambdaTasks[key] = taskHandle
 	}
+	fmt.Println("Singleton lambda tasks set up")
 
 	// set up inputs
 	inputProcHandles := make(map[string]*workspaceio.WorkspaceInputProcessHandle)
@@ -140,6 +144,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 
 		inputProcHandles[key] = newInputProcHandle
 	}
+	fmt.Println("Inputs set up")
 
 	// set up outputs
 	outputProcHandles := make(map[string]*workspaceio.WorkspaceOutputProcessHandle)
@@ -154,6 +159,7 @@ func (workspace *DataWorkspace) CreateWorkspaceInstance() (*WorkspaceInstance, e
 
 		outputProcHandles[key] = newOutputProcHandle
 	}
+	fmt.Println("Outputs set up")
 
 	return &WorkspaceInstance{
 		simpleStdinStdoutDataProcessHandles: simpleStdinStdoutDataProcessHandles,

@@ -1,6 +1,7 @@
 package singletonlambdacomponent
 
 import (
+	"bufio"
 	"dataformats"
 	"encoding/json"
 	"fmt"
@@ -72,12 +73,19 @@ func (component *SingletonLambdaComponent) CreateTaskHandle(
 		InputPipeName:  inputPipe.PipeName(),
 		OutputPipeName: outputPipe.PipeName(),
 	})
+
 	if err != nil {
 		return nil, err
 	}
 
 	fmt.Println("Writing string")
-	io.WriteString(component.stdinPipe, string(encoded))
+	// io.WriteString(component.stdinPipe, string(encoded))
+	f := bufio.NewWriter(component.stdinPipe)
+	f.Write(encoded)
+	defer f.Flush()
+	// _ = f
+	// io.writer
+	// component.stdinPipe.Close()
 	fmt.Println("Wrote string")
 
 	// _, err = component.stdinPipe.Write(encoded)

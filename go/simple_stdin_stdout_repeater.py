@@ -1,6 +1,6 @@
 import sys
 import json
-import PIL
+# import PIL
 
 input_str = sys.stdin.read()
 
