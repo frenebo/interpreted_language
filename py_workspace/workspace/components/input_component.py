@@ -1,12 +1,19 @@
+import os
 from .baseworkspacecomponent import BaseWorkspaceComponent, BaseWorkspaceComponentInstance, ComponentInstantiationException
 
 class InputComponentInstance(BaseWorkspaceComponentInstance):
     def __init__(self, output_data_pipe):
-        pass
+        pipe_path = output_data_pipe.get_pipe_path()
+
+        fd = os.open(pipe_path, os.O_RDWR)
+
+        with os.fdopen(fd, 'w') as output_fifo:
+            output_fifo.write("aaaaaaaaaaaa")
+
 
 class InputComponent(BaseWorkspaceComponent):
     def __init__(self, data_type):
-        assert isinstance(data_type, str), "Assert that datas type is a string"
+        assert isinstance(data_type, str), "Assert that data type is a string"
 
         super().__init__(
             {}, # no input ports

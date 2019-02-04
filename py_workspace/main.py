@@ -1,5 +1,6 @@
 from workspace import DataWorkspace
 from workspace.components import OneOffStdinStdoutComponent, InputComponent, OutputComponent
+import time
 
 if __name__ == "__main__":
     workspace = DataWorkspace()
@@ -23,3 +24,6 @@ if __name__ == "__main__":
     workspace.add_connection("b", "output")
 
     workspace_instance = workspace.create_and_start_instance()
+
+    while True:
+        time.sleep(1)

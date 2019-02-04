@@ -1,4 +1,4 @@
-from ..data_pipe import DataPipe
+from ..data_pipe import DataPipe, PipeUtils
 
 class WorkspaceInstanceException(Exception):
     """Exception for a problem in instantiating the workspace"""
@@ -27,6 +27,8 @@ class WorkspaceInstance():
     def start(self):
         if self._component_instances is not None:
             raise WorkspaceInstanceException("Workspace instance has already been started")
+
+        PipeUtils.remove_pipe_dir()
 
         self._component_instances = {}
         self._data_pipes = {}
