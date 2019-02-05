@@ -10,7 +10,10 @@ class PipeUtils:
 
     @staticmethod
     def remove_pipe_dir():
-        shutil.rmtree(PipeUtils._pipe_dir_name)
+        try:
+            shutil.rmtree(PipeUtils._pipe_dir_name)
+        except FileNotFoundError:
+            pass
 
     @staticmethod
     def init_pipe_dir_if_missing():

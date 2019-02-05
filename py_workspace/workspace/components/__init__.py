@@ -2,3 +2,4 @@ from .baseworkspacecomponent import BaseWorkspaceComponent, BaseWorkspaceCompone
 from .oneoffstdinstdoutcomponent import OneOffStdinStdoutComponent
 from .input_component import InputComponent
 from .output_component import OutputComponent
+from .singleton_process_component import SingletonProcessComponent

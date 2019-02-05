@@ -8,16 +8,16 @@ class BaseWorkspaceComponentInstance():
 
 class BaseWorkspaceComponent():
     def __init__(self, input_ports, output_ports):
-        assert isinstance(input_ports, dict), "input ports argument is dict"
-        assert isinstance(output_ports, dict), "output ports argument is dict"
+        assert isinstance(input_ports, dict), "Assert that input ports argument is dict"
+        assert isinstance(output_ports, dict), "Assert that output ports argument is dict"
 
         for k, v in input_ports.items():
-            assert isinstance(k, str), "input port dict has strings for keys"
-            assert isinstance(v, str), "input port dict has strings for values"
+            assert isinstance(k, str), "Assert that input port dict has strings for keys"
+            assert isinstance(v, str), "Assert that input port dict has strings for values"
 
         for k, v in output_ports.items():
-            assert isinstance(k, str), "output port dict has strings for keys"
-            assert isinstance(v, str), "output port dict has strings for values"
+            assert isinstance(k, str), "Assert that output port dict has strings for keys"
+            assert isinstance(v, str), "Assert that output port dict has strings for values"
 
         self._input_ports = input_ports
         self._output_ports = output_ports

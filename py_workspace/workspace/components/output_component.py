@@ -1,8 +1,20 @@
 from .baseworkspacecomponent import BaseWorkspaceComponent, BaseWorkspaceComponentInstance, ComponentInstantiationException
+import threading
+import os
 
 class OutputComponentInstance(BaseWorkspaceComponentInstance):
-    def __init__(self):
-        pass
+    def __init__(self, input_data_pipe):
+        pipe_path = input_data_pipe.get_pipe_path()
+
+        def threaded_read():
+            fd = os.open(pipe_path, os.O_RDONLY)
+
+            with os.fdopen(fd, 'r') as in_fifo:
+                print("output: " + in_fifo.read())
+
+        # running this is thread since opening the named pipe blocks until a reader opens it also
+        thread = threading.Thread(target=threaded_read)
+        thread.start()
 
 class OutputComponent(BaseWorkspaceComponent):
     def __init__(self, data_type):
@@ -17,4 +29,4 @@ class OutputComponent(BaseWorkspaceComponent):
         if "default" not in input_data_pipe_dict:
             raise ComponentInstantiationException("No pipe for \"default\" input port")
 
-        return OutputComponentInstance()
+        return OutputComponentInstance(input_data_pipe_dict["default"])

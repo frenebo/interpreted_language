@@ -1,5 +1,5 @@
 from workspace import DataWorkspace
-from workspace.components import OneOffStdinStdoutComponent, InputComponent, OutputComponent
+from workspace.components import OneOffStdinStdoutComponent, InputComponent, OutputComponent, SingletonProcessComponent
 import time
 
 if __name__ == "__main__":
@@ -9,12 +9,16 @@ if __name__ == "__main__":
 
     workspace.add_component(
         "a",
-        OneOffStdinStdoutComponent("ls", "text", "text")
+        OneOffStdinStdoutComponent("cat", "text", "text")
     )
 
     workspace.add_component(
         "b",
-        OneOffStdinStdoutComponent("ls", "text", "text")
+        SingletonProcessComponent(
+            "python3 example_singleton.py",
+            {"default": "text"},
+            {"default": "text"},
+        ),
     )
 
     workspace.add_component("output", OutputComponent("text"))
@@ -24,6 +28,8 @@ if __name__ == "__main__":
     workspace.add_connection("b", "output")
 
     workspace_instance = workspace.create_and_start_instance()
+    second_instance = workspace.create_and_start_instance()
+
 
     while True:
         time.sleep(1)

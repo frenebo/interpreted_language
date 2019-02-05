@@ -4,11 +4,24 @@ from .baseworkspacecomponent import (
     ComponentInstantiationException,
     BaseWorkspaceComponentInstance,
 )
+import threading
 
 class OneOffStdinStdoutComponentInstance(BaseWorkspaceComponentInstance):
     def __init__(self, command_string, input_data_pipe, output_data_pipe):
         super().__init__()
-        subprocess.call(command_string)
+
+        def threaded_call():
+            print("Calling subprocess for one off stdin stdout component")
+            # pipe input pipe to command string to output pipe
+            subprocess.Popen(
+                "(" + command_string + "<" + input_data_pipe.get_pipe_path() + ")>"+ output_data_pipe.get_pipe_path() + "",
+                shell=True
+            )
+            print("Done calling subprocess for one off stdin stdout component")
+
+        thread = threading.Thread(target=threaded_call)
+        thread.start()
+
 
 class OneOffStdinStdoutComponent(BaseWorkspaceComponent):
     def __init__(self, command_string, input_type, output_type):
