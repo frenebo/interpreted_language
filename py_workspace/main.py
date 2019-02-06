@@ -7,13 +7,13 @@ if __name__ == "__main__":
 
     workspace.add_component("input", InputComponent("text"))
 
-    workspace.add_component(
-        "a",
-        OneOffStdinStdoutComponent("cat", "text", "text")
-    )
+    # workspace.add_component(
+    #     "a",
+    #     OneOffStdinStdoutComponent("cat", "text", "text")
+    # )
 
     workspace.add_component(
-        "b",
+        "a",
         SingletonProcessComponent(
             "python3 example_singleton.py",
             {"default": "text"},
@@ -24,11 +24,12 @@ if __name__ == "__main__":
     workspace.add_component("output", OutputComponent("text"))
 
     workspace.add_connection("input", "a")
-    workspace.add_connection("a", "b")
-    workspace.add_connection("b", "output")
+    workspace.add_connection("a", "output")
 
     workspace_instance = workspace.create_and_start_instance()
+    print("created first")
     second_instance = workspace.create_and_start_instance()
+    print("created second")
 
 
     while True:

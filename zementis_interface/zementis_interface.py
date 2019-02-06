@@ -47,6 +47,7 @@ class ZementisInterface:
         fun_stdout_redirect = io.StringIO()
 
         for line in sys.stdin:
+            sys.stderr.write("Just read a line!\n")
             def threaded_call():
                 stdin_instruction_json = json.loads(line)
                 input_pipe_path = stdin_instruction_json["input_pipe_paths"]["input_name"]
@@ -67,15 +68,6 @@ class ZementisInterface:
                 else:
                     raise Exception("Unimplemented input type " + entry_input_type)
 
-                # # process output
-                # result = None
-                # if entry_output_type == "json":
-                #     result = json.dumps(raw_result)
-                # elif entry_input_type == "text":
-                #     input_val = pipe_read_value
-                # else:
-                #     raise Exception("Unimplented output type " + entry_output_type)
-
                 # run function
                 raw_result = None
                 with contextlib.redirect_stdout(fun_stdout_redirect):
@@ -94,6 +86,7 @@ class ZementisInterface:
 
                 with os.fdopen(fd, 'w') as output_fifo:
                     output_fifo.write(result_text)
+                    # output_fifo.flush()
 
 
             thread = threading.Thread(target=threaded_call)

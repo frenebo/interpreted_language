@@ -1,4 +1,5 @@
 import os
+import os.path
 import errno
 import shutil
 
@@ -23,6 +24,10 @@ class PipeUtils:
             # don't raise exception if the dir already exists
             if e.errno != errno.EEXIST:
                 raise PipeUtilsException("Error creating directory: " + e.strerror)
+
+    @staticmethod
+    def exists_pipe(path_name):
+        return os.path.isfile(path_name)
 
     @staticmethod
     def create_named_pipe(pipe_name):

@@ -1,4 +1,5 @@
 from ..data_pipe import DataPipe, PipeUtils
+import random
 
 class WorkspaceInstanceException(Exception):
     """Exception for a problem in instantiating the workspace"""
@@ -15,13 +16,16 @@ class WorkspaceInstance():
         self._data_pipes = None
 
     def _new_data_pipe_id(self):
-        try:
-            self._pipe_counter
-        except AttributeError:
-            self._pipe_counter = 0
+        pipe_id = None
 
-        self._pipe_counter += 1
-        return str(self._pipe_counter)
+        is_unique = False
+        while not is_unique:
+            if (pipe_id is not None) and (not PipeUtils.exists_pipe(pipe_id)):
+                is_unique = True
+            else:
+                pipe_id = str(int(random.uniform(0, 1)*1000000))
+
+        return pipe_id
 
 
     def start(self):
